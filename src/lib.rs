@@ -12,6 +12,12 @@
 ))]
 extern crate vmm_sys_util;
 
+#[cfg(feature = "with-serde")]
+extern crate serde;
+
+#[cfg(feature = "with-serde")]
+extern crate serde_derive;
+
 #[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
 mod x86;
 #[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
