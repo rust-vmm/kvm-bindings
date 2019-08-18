@@ -1,0 +1,69 @@
+// Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+use std::mem;
+use std::ptr;
+
+use serde::de::{Deserialize, Deserializer};
+use serde::{Serialize, Serializer};
+use serde_bytes::ByteBuf;
+
+fn serialize_ffi<T>(something: &T) -> ByteBuf {
+    let mut serialized_self: Vec<u8> = vec![0; mem::size_of::<T>()];
+    unsafe {
+        libc::memcpy(
+            serialized_self.as_mut_ptr() as *mut libc::c_void,
+            something as *const T as *const libc::c_void,
+            mem::size_of::<T>(),
+        );
+    }
+    ByteBuf::from(serialized_self)
+}
+
+fn deserialize_ffi<T>(serialized: ByteBuf) -> T {
+    unsafe { ptr::read(serialized.into_vec().as_ptr() as *const T) }
+}
+
+impl<Storage, Align> Serialize for __BindgenBitfieldUnit<Storage, Align>
+where
+    Storage: AsRef<[u8]> + AsMut<[u8]>,
+{
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let bytes = serialize_ffi::<__BindgenBitfieldUnit<Storage, Align>>(&self);
+        bytes.serialize(serializer)
+    }
+}
+
+impl<'de, Storage, Align> Deserialize<'de> for __BindgenBitfieldUnit<Storage, Align>
+where
+    Storage: AsRef<[u8]> + AsMut<[u8]>,
+{
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let v: ByteBuf = ByteBuf::deserialize::<D>(deserializer)?;
+        Ok(deserialize_ffi::<__BindgenBitfieldUnit<Storage, Align>>(v))
+    }
+}
+
+impl<T> Serialize for __IncompleteArrayField<T> {
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        [0u8; 0].serialize(serializer)
+    }
+}
+
+impl<'de, T> Deserialize<'de> for __IncompleteArrayField<T> {
+    fn deserialize<D>(_: D) -> std::result::Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        Ok(__IncompleteArrayField::new())
+    }
+}

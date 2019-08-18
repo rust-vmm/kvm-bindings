@@ -7,9 +7,14 @@ repository = "https://github.com/rust-vmm/kvm-bindings"
 readme = "README.md"
 keywords = ["kvm"]
 license = "Apache-2.0"
+build = "build.rs"
 
 [features]
 kvm-v4_14_0 = []
 kvm-v4_20_0 = []
+with_serde = ["libc", "serde", "serde_bytes"]
 
 [dependencies]
+libc =  { version = ">=0.2.39", optional = true }
+serde = { version = ">=1.0.27", optional = true }
+serde_bytes = { version = ">=0.11.2", optional = true }
