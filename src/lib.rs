@@ -5,6 +5,8 @@
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
 
+extern crate vmm_serde;
+
 #[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
 mod x86;
 #[cfg(any(target_arch = "x86", target_arch = "x86_64"))]

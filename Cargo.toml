@@ -11,5 +11,11 @@ license = "Apache-2.0"
 [features]
 kvm-v4_14_0 = []
 kvm-v4_20_0 = []
+with-serde = ["serde", "vmm-serde/serde_derive_ffi"]
 
 [dependencies]
+serde = { version = "1.0", optional = true }
+vmm-serde = { git = "https://github.com/jiangliu/vmm-serde", branch = "v1" }
+
+[dev-dependencies]
+serde_json = "1.0"
