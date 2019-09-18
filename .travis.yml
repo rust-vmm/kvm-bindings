@@ -3,8 +3,14 @@ rust:
   - stable
 script:
   - cargo build --release
+  - cargo build --release --features with-serde
   - cargo build --release --features kvm-v4_14_0
   - cargo build --release --features kvm-v4_20_0
+  - cargo build --release --features kvm-v4_14_0,with-serde
+  - cargo build --release --features kvm-v4_20_0,with-serde
   - cargo test
+  - cargo test --features with-serde
   - cargo test --features kvm-v4_14_0
   - cargo test --features kvm-v4_20_0
+  - cargo test --features kvm-v4_14_0,with-serde
+  - cargo test --features kvm-v4_20_0,with-serde
