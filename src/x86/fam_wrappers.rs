@@ -30,6 +30,16 @@ generate_fam_struct_impl!(
     KVM_MAX_CPUID_ENTRIES
 );
 
+impl Clone for kvm_cpuid2 {
+    fn clone(&self) -> Self {
+        kvm_cpuid2 {
+            nent: self.nent,
+            padding: self.padding,
+            entries: self.entries.clone(),
+        }
+    }
+}
+
 /// Wrapper over the `kvm_cpuid2` structure.
 ///
 /// The `kvm_cpuid2` structure contains a flexible array member. For details check the
@@ -49,6 +59,16 @@ generate_fam_struct_impl!(
     KVM_MAX_MSR_ENTRIES
 );
 
+impl Clone for kvm_msrs {
+    fn clone(&self) -> Self {
+        kvm_msrs {
+            nmsrs: self.nmsrs,
+            pad: self.pad,
+            entries: self.entries.clone(),
+        }
+    }
+}
+
 /// Wrapper over the `kvm_msrs` structure.
 ///
 /// The `kvm_msrs` structure contains a flexible array member. For details check the
@@ -60,6 +80,15 @@ pub type Msrs = FamStructWrapper<kvm_msrs>;
 
 // Implement the FamStruct trait for kvm_msr_list.
 generate_fam_struct_impl!(kvm_msr_list, u32, indices, u32, nmsrs, KVM_MAX_MSR_ENTRIES);
+
+impl Clone for kvm_msr_list {
+    fn clone(&self) -> Self {
+        kvm_msr_list {
+            nmsrs: self.nmsrs,
+            indices: self.indices.clone(),
+        }
+    }
+}
 
 /// Wrapper over the `kvm_msr_list` structure.
 ///
