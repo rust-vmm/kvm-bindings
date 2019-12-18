@@ -9,6 +9,9 @@ mod bindings_v4_14_0;
 #[cfg(feature = "kvm-v4_20_0")]
 mod bindings_v4_20_0;
 
+#[cfg(feature = "with-serde")]
+mod serializers;
+
 // Major hack to have a default version in case no feature is specified:
 // If no version is specified by using the features, just use the latest one
 // which currently is 4.20.
@@ -27,6 +30,9 @@ pub mod bindings {
 
     #[cfg(feature = "fam-wrappers")]
     pub use super::fam_wrappers::*;
+
+    #[cfg(feature = "with-serde")]
+    pub use super::serializers::*;
 }
 
 #[cfg(all(test, feature = "with-serde"))]
@@ -130,6 +136,22 @@ mod tests {
             let val_ser = serde_json::to_string(&val).unwrap();
             let val_deser = serde_json::from_str::<kvm_regs>(val_ser.as_str()).unwrap();
             assert_eq!(val, val_deser);
+        }
+
+        {
+            // Test kvm_lapic_state ser/deser.
+            let val = kvm_lapic_state::default();
+            let val_ser = serde_json::to_string(&val).unwrap();
+            let val_deser = serde_json::from_str::<kvm_lapic_state>(val_ser.as_str()).unwrap();
+            assert_eq!(&val.regs[..], &val_deser.regs[..]);
+        }
+
+        {
+            // Test kvm_xsave ser/deser.
+            let val = kvm_xsave::default();
+            let val_ser = serde_json::to_string(&val).unwrap();
+            let val_deser = serde_json::from_str::<kvm_xsave>(val_ser.as_str()).unwrap();
+            assert_eq!(&val.region[..], &val_deser.region[..]);
         }
     }
 }

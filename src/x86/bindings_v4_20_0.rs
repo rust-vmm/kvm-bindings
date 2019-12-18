@@ -1490,8 +1490,6 @@ fn bindgen_test_layout_kvm_regs() {
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
-// TODO implement for fixed size array
-//#[cfg_attr(feature = "with-serde", derive(Deserialize, Serialize))]
 pub struct kvm_lapic_state {
     pub regs: [::std::os::raw::c_char; 1024usize],
 }
@@ -3408,8 +3406,6 @@ fn bindgen_test_layout_kvm_debugregs() {
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
-// TODO implement for fixed size array
-//#[cfg_attr(feature = "with-serde", derive(Deserialize, Serialize))]
 pub struct kvm_xsave {
     pub region: [__u32; 1024usize],
 }
