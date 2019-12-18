@@ -2101,9 +2101,12 @@ fn bindgen_test_layout_kvm_msr_entry() {
 }
 #[repr(C)]
 #[derive(Debug, Default)]
+#[cfg_attr(feature = "with-serde", derive(Deserialize, Serialize))]
 pub struct kvm_msrs {
     pub nmsrs: __u32,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub pad: __u32,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub entries: __IncompleteArrayField<kvm_msr_entry>,
 }
 #[test]
@@ -2428,9 +2431,12 @@ fn bindgen_test_layout_kvm_cpuid_entry2() {
 }
 #[repr(C)]
 #[derive(Debug, Default)]
+#[cfg_attr(feature = "with-serde", derive(Deserialize, Serialize))]
 pub struct kvm_cpuid2 {
     pub nent: __u32,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub padding: __u32,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub entries: __IncompleteArrayField<kvm_cpuid_entry2>,
 }
 #[test]

@@ -153,5 +153,27 @@ mod tests {
             let val_deser = serde_json::from_str::<kvm_xsave>(val_ser.as_str()).unwrap();
             assert_eq!(&val.region[..], &val_deser.region[..]);
         }
+
+        {
+            // Test kvm_msrs ser/deser.
+            let val = kvm_msrs::default();
+            let val_ser = serde_json::to_string(&val).unwrap();
+            let val_deser = serde_json::from_str::<kvm_msrs>(val_ser.as_str()).unwrap();
+            // TODO encapsulate in FamStructWrappers and operate on those after
+            // https://github.com/rust-vmm/vmm-sys-util/issues/65 is closed.
+            // Until then, only partial comparison can be performed.
+            assert_eq!(val.nmsrs, val_deser.nmsrs);
+        }
+
+        {
+            // Test kvm_cpuid2 ser/deser.
+            let val = kvm_cpuid2::default();
+            let val_ser = serde_json::to_string(&val).unwrap();
+            let val_deser = serde_json::from_str::<kvm_cpuid2>(val_ser.as_str()).unwrap();
+            // TODO encapsulate in FamStructWrappers and operate on those after
+            // https://github.com/rust-vmm/vmm-sys-util/issues/65 is closed.
+            // Until then, only partial comparison can be performed.
+            assert_eq!(val.nent, val_deser.nent);
+        }
     }
 }

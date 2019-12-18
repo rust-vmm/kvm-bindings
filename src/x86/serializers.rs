@@ -3,7 +3,7 @@
 
 #![cfg(feature = "with-serde")]
 
-//! Custom serialization support for 4.20 bindings.
+//! Custom serialization support for 4.14 and 4.20 bindings.
 
 use serde::de::{Deserialize, Deserializer};
 use serde::{Serialize, Serializer};
