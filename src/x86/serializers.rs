@@ -55,3 +55,53 @@ impl Serialize for kvm_xsave {
         region.serialize(serializer)
     }
 }
+
+impl<'de> Deserialize<'de> for kvm_ioapic_state__bindgen_ty_1 {
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        // This union can either express `bits` or `fields`, both occupying `sizeof(u64)`.
+        // It's therefore save to deserialize just the `bits` field.
+        let bits = __u64::deserialize(deserializer)?;
+        Ok(kvm_ioapic_state__bindgen_ty_1 { bits })
+    }
+}
+
+impl Serialize for kvm_ioapic_state__bindgen_ty_1 {
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        // This union can either express `bits` or `fields`, both occupying `sizeof(u64)`.
+        // It's therefore save to serialize just the `bits` field.
+        let bits = unsafe { self.bits };
+        bits.serialize(serializer)
+    }
+}
+
+impl<'de> Deserialize<'de> for kvm_irqchip__bindgen_ty_1 {
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        // This union can either hold a `kvm_pic_state` or a `kvm_ioapic_state`.
+        // With no way of knowing which of the union's fields is needed, we deserialize the
+        // larger one - `kvm_ioapic_state`.
+        let ioapic = kvm_ioapic_state::deserialize(deserializer)?;
+        Ok(kvm_irqchip__bindgen_ty_1 { ioapic })
+    }
+}
+
+impl Serialize for kvm_irqchip__bindgen_ty_1 {
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        // This union can either hold a `kvm_pic_state` or a `kvm_ioapic_state`.
+        // With no way of knowing which of the union's fields is used, we can only serialize the
+        // larger one - `kvm_ioapic_state`.
+        let ioapic = unsafe { self.ioapic };
+        ioapic.serialize(serializer)
+    }
+}

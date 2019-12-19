@@ -163,6 +163,7 @@ mod tests {
             // https://github.com/rust-vmm/vmm-sys-util/issues/65 is closed.
             // Until then, only partial comparison can be performed.
             assert_eq!(val.nmsrs, val_deser.nmsrs);
+            assert_eq!(val_deser.pad, 0u32);
         }
 
         {
@@ -174,6 +175,31 @@ mod tests {
             // https://github.com/rust-vmm/vmm-sys-util/issues/65 is closed.
             // Until then, only partial comparison can be performed.
             assert_eq!(val.nent, val_deser.nent);
+            assert_eq!(val_deser.padding, 0u32);
+        }
+
+        {
+            // Test kvm_irqchip ser/deser.
+            let val = kvm_irqchip::default();
+            let val_ser = serde_json::to_string(&val).unwrap();
+            let val_deser = serde_json::from_str::<kvm_irqchip>(val_ser.as_str()).unwrap();
+            assert_eq!(val.chip_id, val_deser.chip_id);
+            assert_eq!(val_deser.pad, 0u32);
+            unsafe {
+                assert_eq!(
+                    val.chip.ioapic.base_address,
+                    val_deser.chip.ioapic.base_address
+                );
+                assert_eq!(val.chip.ioapic.id, val_deser.chip.ioapic.id);
+                assert_eq!(val.chip.ioapic.ioregsel, val_deser.chip.ioapic.ioregsel);
+                assert_eq!(val.chip.ioapic.irr, val_deser.chip.ioapic.irr);
+                for i in 0..24 {
+                    assert_eq!(
+                        val.chip.ioapic.redirtbl[i].bits,
+                        val_deser.chip.ioapic.redirtbl[i].bits
+                    );
+                }
+            }
         }
     }
 }

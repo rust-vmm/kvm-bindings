@@ -934,6 +934,7 @@ fn bindgen_test_layout_kvm_pic_state() {
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
+#[cfg_attr(feature = "with-serde", derive(Deserialize, Serialize))]
 pub struct kvm_ioapic_state {
     pub base_address: __u64,
     pub ioregsel: __u32,
@@ -4181,10 +4182,10 @@ impl Default for kvm_irq_level {
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
-// TODO: impl for union
-//#[cfg_attr(feature = "with-serde", derive(Deserialize, Serialize))]
+#[cfg_attr(feature = "with-serde", derive(Deserialize, Serialize))]
 pub struct kvm_irqchip {
     pub chip_id: __u32,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub pad: __u32,
     pub chip: kvm_irqchip__bindgen_ty_1,
 }
