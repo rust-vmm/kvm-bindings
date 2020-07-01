@@ -16,5 +16,5 @@ fam-wrappers = ["vmm-sys-util"]
 [dependencies]
 vmm-sys-util = { version = ">=0.2.0", optional = true }
 
-versionize = { git = "https://github.com/firecracker-microvm/versionize", tag = "v0.1.0" }
-versionize_derive = { git = "https://github.com/firecracker-microvm/versionize_derive", tag = "v0.1.0" }
+versionize = { version = ">=0.1.1" }
+versionize_derive = { version = ">=0.1.1" }
