@@ -14,4 +14,4 @@ kvm-v4_20_0 = []
 fam-wrappers = ["vmm-sys-util"]
 
 [dependencies]
-vmm-sys-util = { version = ">=0.2.0", optional = true }
+vmm-sys-util = { version = "=0.7.0", optional = true }
