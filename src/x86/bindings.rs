@@ -1143,10 +1143,10 @@ impl kvm_ioapic_state__bindgen_ty_1__bindgen_ty_1 {
     }
     #[inline]
     pub fn set_delivery_mode(&mut self, val: __u8) {
-        unsafe {
-            let val: u8 = ::std::mem::transmute(val);
+        
+            let val: u8 = unsafe { ::std::mem::transmute(val) };
             self._bitfield_1.set(0usize, 3u8, val as u64)
-        }
+        
     }
     #[inline]
     pub fn dest_mode(&self) -> __u8 {
@@ -1154,10 +1154,10 @@ impl kvm_ioapic_state__bindgen_ty_1__bindgen_ty_1 {
     }
     #[inline]
     pub fn set_dest_mode(&mut self, val: __u8) {
-        unsafe {
-            let val: u8 = ::std::mem::transmute(val);
+        
+            let val: u8 = unsafe { ::std::mem::transmute(val) };
             self._bitfield_1.set(3usize, 1u8, val as u64)
-        }
+        
     }
     #[inline]
     pub fn delivery_status(&self) -> __u8 {
@@ -1165,10 +1165,10 @@ impl kvm_ioapic_state__bindgen_ty_1__bindgen_ty_1 {
     }
     #[inline]
     pub fn set_delivery_status(&mut self, val: __u8) {
-        unsafe {
-            let val: u8 = ::std::mem::transmute(val);
+        
+            let val: u8 = unsafe { ::std::mem::transmute(val) };
             self._bitfield_1.set(4usize, 1u8, val as u64)
-        }
+        
     }
     #[inline]
     pub fn polarity(&self) -> __u8 {
@@ -1176,10 +1176,10 @@ impl kvm_ioapic_state__bindgen_ty_1__bindgen_ty_1 {
     }
     #[inline]
     pub fn set_polarity(&mut self, val: __u8) {
-        unsafe {
-            let val: u8 = ::std::mem::transmute(val);
+        
+            let val: u8 = unsafe { ::std::mem::transmute(val) };
             self._bitfield_1.set(5usize, 1u8, val as u64)
-        }
+        
     }
     #[inline]
     pub fn remote_irr(&self) -> __u8 {
@@ -1187,10 +1187,10 @@ impl kvm_ioapic_state__bindgen_ty_1__bindgen_ty_1 {
     }
     #[inline]
     pub fn set_remote_irr(&mut self, val: __u8) {
-        unsafe {
-            let val: u8 = ::std::mem::transmute(val);
+        
+            let val: u8 = unsafe { ::std::mem::transmute(val) };
             self._bitfield_1.set(6usize, 1u8, val as u64)
-        }
+        
     }
     #[inline]
     pub fn trig_mode(&self) -> __u8 {
@@ -1198,10 +1198,10 @@ impl kvm_ioapic_state__bindgen_ty_1__bindgen_ty_1 {
     }
     #[inline]
     pub fn set_trig_mode(&mut self, val: __u8) {
-        unsafe {
-            let val: u8 = ::std::mem::transmute(val);
+        
+            let val: u8 = unsafe { ::std::mem::transmute(val) };
             self._bitfield_1.set(7usize, 1u8, val as u64)
-        }
+        
     }
     #[inline]
     pub fn mask(&self) -> __u8 {
@@ -1209,10 +1209,10 @@ impl kvm_ioapic_state__bindgen_ty_1__bindgen_ty_1 {
     }
     #[inline]
     pub fn set_mask(&mut self, val: __u8) {
-        unsafe {
-            let val: u8 = ::std::mem::transmute(val);
+       
+            let val: u8 = unsafe ::std::mem::transmute(val);
             self._bitfield_1.set(8usize, 1u8, val as u64)
-        }
+        
     }
     #[inline]
     pub fn reserve(&self) -> __u8 {
@@ -1220,10 +1220,10 @@ impl kvm_ioapic_state__bindgen_ty_1__bindgen_ty_1 {
     }
     #[inline]
     pub fn set_reserve(&mut self, val: __u8) {
-        unsafe {
-            let val: u8 = ::std::mem::transmute(val);
+        
+            let val: u8 = unsafe { ::std::mem::transmute(val) };
             self._bitfield_1.set(9usize, 7u8, val as u64)
-        }
+        
     }
     #[inline]
     pub fn new_bitfield_1(
