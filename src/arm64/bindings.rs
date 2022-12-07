@@ -78,6 +78,8 @@ pub const PSCI_0_2_AFFINITY_LEVEL_ON_PENDING: u32 = 2;
 pub const PSCI_0_2_TOS_UP_MIGRATE: u32 = 0;
 pub const PSCI_0_2_TOS_UP_NO_MIGRATE: u32 = 1;
 pub const PSCI_0_2_TOS_MP: u32 = 2;
+pub const PSCI_1_1_RESET_TYPE_SYSTEM_WARM_RESET: u32 = 0;
+pub const PSCI_1_1_RESET_TYPE_VENDOR_START: u32 = 2147483648;
 pub const PSCI_VERSION_MAJOR_SHIFT: u32 = 16;
 pub const PSCI_VERSION_MINOR_MASK: u32 = 65535;
 pub const PSCI_VERSION_MAJOR_MASK: i32 = -65536;
@@ -146,6 +148,20 @@ pub const HWCAP2_DGH: u32 = 32768;
 pub const HWCAP2_RNG: u32 = 65536;
 pub const HWCAP2_BTI: u32 = 131072;
 pub const HWCAP2_MTE: u32 = 262144;
+pub const HWCAP2_ECV: u32 = 524288;
+pub const HWCAP2_AFP: u32 = 1048576;
+pub const HWCAP2_RPRES: u32 = 2097152;
+pub const HWCAP2_MTE3: u32 = 4194304;
+pub const HWCAP2_SME: u32 = 8388608;
+pub const HWCAP2_SME_I16I64: u32 = 16777216;
+pub const HWCAP2_SME_F64F64: u32 = 33554432;
+pub const HWCAP2_SME_I8I32: u32 = 67108864;
+pub const HWCAP2_SME_F16F32: u32 = 134217728;
+pub const HWCAP2_SME_B16F32: u32 = 268435456;
+pub const HWCAP2_SME_F32F32: u32 = 536870912;
+pub const HWCAP2_SME_FA64: u32 = 1073741824;
+pub const HWCAP2_WFXT: u32 = 2147483648;
+pub const HWCAP2_EBF16: u64 = 4294967296;
 pub const __SVE_VQ_BYTES: u32 = 16;
 pub const __SVE_VQ_MIN: u32 = 1;
 pub const __SVE_VQ_MAX: u32 = 512;
@@ -195,6 +211,8 @@ pub const SVE_PT_REGS_FPSIMD: u32 = 0;
 pub const SVE_PT_REGS_SVE: u32 = 1;
 pub const SVE_PT_VL_INHERIT: u32 = 2;
 pub const SVE_PT_VL_ONEXEC: u32 = 4;
+pub const ZA_PT_VL_INHERIT: u32 = 2;
+pub const ZA_PT_VL_ONEXEC: u32 = 4;
 pub const KVM_COALESCED_MMIO_PAGE_OFFSET: u32 = 1;
 pub const KVM_ARM_TARGET_AEM_V8: u32 = 0;
 pub const KVM_ARM_TARGET_FOUNDATION_V8: u32 = 1;
@@ -204,9 +222,7 @@ pub const KVM_ARM_TARGET_CORTEX_A53: u32 = 4;
 pub const KVM_ARM_TARGET_GENERIC_V8: u32 = 5;
 pub const KVM_ARM_NUM_TARGETS: u32 = 6;
 pub const KVM_ARM_DEVICE_TYPE_SHIFT: u32 = 0;
-pub const KVM_ARM_DEVICE_TYPE_MASK: u32 = 65535;
 pub const KVM_ARM_DEVICE_ID_SHIFT: u32 = 16;
-pub const KVM_ARM_DEVICE_ID_MASK: u32 = 4294901760;
 pub const KVM_ARM_DEVICE_VGIC_V2: u32 = 0;
 pub const KVM_VGIC_V2_ADDR_TYPE_DIST: u32 = 0;
 pub const KVM_VGIC_V2_ADDR_TYPE_CPU: u32 = 1;
@@ -224,10 +240,13 @@ pub const KVM_ARM_VCPU_SVE: u32 = 4;
 pub const KVM_ARM_VCPU_PTRAUTH_ADDRESS: u32 = 5;
 pub const KVM_ARM_VCPU_PTRAUTH_GENERIC: u32 = 6;
 pub const KVM_ARM_MAX_DBG_REGS: u32 = 16;
+pub const KVM_DEBUG_ARCH_HSR_HIGH_VALID: u32 = 1;
 pub const KVM_GUESTDBG_USE_SW_BP: u32 = 65536;
 pub const KVM_GUESTDBG_USE_HW: u32 = 131072;
 pub const KVM_PMU_EVENT_ALLOW: u32 = 0;
 pub const KVM_PMU_EVENT_DENY: u32 = 1;
+pub const KVM_ARM_TAGS_TO_GUEST: u32 = 0;
+pub const KVM_ARM_TAGS_FROM_GUEST: u32 = 1;
 pub const KVM_REG_ARM_COPROC_MASK: u32 = 268369920;
 pub const KVM_REG_ARM_COPROC_SHIFT: u32 = 16;
 pub const KVM_REG_ARM_CORE: u32 = 1048576;
@@ -257,6 +276,9 @@ pub const KVM_REG_ARM_SMCCC_ARCH_WORKAROUND_2_UNKNOWN: u32 = 1;
 pub const KVM_REG_ARM_SMCCC_ARCH_WORKAROUND_2_AVAIL: u32 = 2;
 pub const KVM_REG_ARM_SMCCC_ARCH_WORKAROUND_2_NOT_REQUIRED: u32 = 3;
 pub const KVM_REG_ARM_SMCCC_ARCH_WORKAROUND_2_ENABLED: u32 = 16;
+pub const KVM_REG_ARM_SMCCC_ARCH_WORKAROUND_3_NOT_AVAIL: u32 = 0;
+pub const KVM_REG_ARM_SMCCC_ARCH_WORKAROUND_3_AVAIL: u32 = 1;
+pub const KVM_REG_ARM_SMCCC_ARCH_WORKAROUND_3_NOT_REQUIRED: u32 = 2;
 pub const KVM_REG_ARM64_SVE: u32 = 1376256;
 pub const KVM_REG_ARM64_SVE_ZREG_BASE: u32 = 0;
 pub const KVM_REG_ARM64_SVE_PREG_BASE: u32 = 1024;
@@ -267,6 +289,7 @@ pub const KVM_ARM64_SVE_MAX_SLICES: u32 = 32;
 pub const KVM_ARM64_SVE_VQ_MIN: u32 = 1;
 pub const KVM_ARM64_SVE_VQ_MAX: u32 = 512;
 pub const KVM_ARM64_SVE_VLS_WORDS: u32 = 8;
+pub const KVM_REG_ARM_FW_FEAT_BMAP: u32 = 1441792;
 pub const KVM_DEV_ARM_VGIC_GRP_ADDR: u32 = 0;
 pub const KVM_DEV_ARM_VGIC_GRP_DIST_REGS: u32 = 1;
 pub const KVM_DEV_ARM_VGIC_GRP_CPU_REGS: u32 = 2;
@@ -296,6 +319,7 @@ pub const KVM_ARM_VCPU_PMU_V3_CTRL: u32 = 0;
 pub const KVM_ARM_VCPU_PMU_V3_IRQ: u32 = 0;
 pub const KVM_ARM_VCPU_PMU_V3_INIT: u32 = 1;
 pub const KVM_ARM_VCPU_PMU_V3_FILTER: u32 = 2;
+pub const KVM_ARM_VCPU_PMU_V3_SET_PMU: u32 = 3;
 pub const KVM_ARM_VCPU_TIMER_CTRL: u32 = 1;
 pub const KVM_ARM_VCPU_TIMER_IRQ_VTIMER: u32 = 0;
 pub const KVM_ARM_VCPU_TIMER_IRQ_PTIMER: u32 = 1;
@@ -321,6 +345,8 @@ pub const KVM_PSCI_RET_SUCCESS: u32 = 0;
 pub const KVM_PSCI_RET_NI: i32 = -1;
 pub const KVM_PSCI_RET_INVAL: i32 = -2;
 pub const KVM_PSCI_RET_DENIED: i32 = -3;
+pub const KVM_SYSTEM_EVENT_RESET_FLAG_PSCI_RESET2: u32 = 1;
+pub const KVM_EXIT_FAIL_ENTRY_CPU_UNSUPPORTED: u32 = 1;
 pub const KVM_API_VERSION: u32 = 12;
 pub const KVM_TRC_SHIFT: u32 = 16;
 pub const KVM_TRC_ENTRYEXIT: u32 = 65536;
@@ -400,10 +426,14 @@ pub const KVM_EXIT_DIRTY_RING_FULL: u32 = 31;
 pub const KVM_EXIT_AP_RESET_HOLD: u32 = 32;
 pub const KVM_EXIT_X86_BUS_LOCK: u32 = 33;
 pub const KVM_EXIT_XEN: u32 = 34;
+pub const KVM_EXIT_RISCV_SBI: u32 = 35;
+pub const KVM_EXIT_RISCV_CSR: u32 = 36;
+pub const KVM_EXIT_NOTIFY: u32 = 37;
 pub const KVM_INTERNAL_ERROR_EMULATION: u32 = 1;
 pub const KVM_INTERNAL_ERROR_SIMUL_EX: u32 = 2;
 pub const KVM_INTERNAL_ERROR_DELIVERY_EV: u32 = 3;
 pub const KVM_INTERNAL_ERROR_UNEXPECTED_EXIT_REASON: u32 = 4;
+pub const KVM_INTERNAL_ERROR_EMULATION_FLAG_INSTRUCTION_BYTES: u32 = 1;
 pub const KVM_EXIT_IO_IN: u32 = 0;
 pub const KVM_EXIT_IO_OUT: u32 = 1;
 pub const KVM_S390_RESET_POR: u32 = 1;
@@ -414,16 +444,23 @@ pub const KVM_S390_RESET_IPL: u32 = 16;
 pub const KVM_SYSTEM_EVENT_SHUTDOWN: u32 = 1;
 pub const KVM_SYSTEM_EVENT_RESET: u32 = 2;
 pub const KVM_SYSTEM_EVENT_CRASH: u32 = 3;
+pub const KVM_SYSTEM_EVENT_WAKEUP: u32 = 4;
+pub const KVM_SYSTEM_EVENT_SUSPEND: u32 = 5;
+pub const KVM_SYSTEM_EVENT_SEV_TERM: u32 = 6;
 pub const KVM_MSR_EXIT_REASON_INVAL: u32 = 1;
 pub const KVM_MSR_EXIT_REASON_UNKNOWN: u32 = 2;
 pub const KVM_MSR_EXIT_REASON_FILTER: u32 = 4;
+pub const KVM_NOTIFY_CONTEXT_INVALID: u32 = 1;
 pub const SYNC_REGS_SIZE_BYTES: u32 = 2048;
 pub const KVM_S390_MEMOP_LOGICAL_READ: u32 = 0;
 pub const KVM_S390_MEMOP_LOGICAL_WRITE: u32 = 1;
 pub const KVM_S390_MEMOP_SIDA_READ: u32 = 2;
 pub const KVM_S390_MEMOP_SIDA_WRITE: u32 = 3;
+pub const KVM_S390_MEMOP_ABSOLUTE_READ: u32 = 4;
+pub const KVM_S390_MEMOP_ABSOLUTE_WRITE: u32 = 5;
 pub const KVM_S390_MEMOP_F_CHECK_ONLY: u32 = 1;
 pub const KVM_S390_MEMOP_F_INJECT_EXCEPTION: u32 = 2;
+pub const KVM_S390_MEMOP_F_SKEY_PROTECTION: u32 = 4;
 pub const KVM_MP_STATE_RUNNABLE: u32 = 0;
 pub const KVM_MP_STATE_UNINITIALIZED: u32 = 1;
 pub const KVM_MP_STATE_INIT_RECEIVED: u32 = 2;
@@ -434,6 +471,7 @@ pub const KVM_MP_STATE_CHECK_STOP: u32 = 6;
 pub const KVM_MP_STATE_OPERATING: u32 = 7;
 pub const KVM_MP_STATE_LOAD: u32 = 8;
 pub const KVM_MP_STATE_AP_RESET_HOLD: u32 = 9;
+pub const KVM_MP_STATE_SUSPENDED: u32 = 10;
 pub const KVM_S390_SIGP_STOP: u32 = 4294836224;
 pub const KVM_S390_PROGRAM_INT: u32 = 4294836225;
 pub const KVM_S390_SIGP_SET_PREFIX: u32 = 4294836226;
@@ -662,13 +700,40 @@ pub const KVM_CAP_SET_GUEST_DEBUG2: u32 = 195;
 pub const KVM_CAP_SGX_ATTRIBUTE: u32 = 196;
 pub const KVM_CAP_VM_COPY_ENC_CONTEXT_FROM: u32 = 197;
 pub const KVM_CAP_PTP_KVM: u32 = 198;
+pub const KVM_CAP_HYPERV_ENFORCE_CPUID: u32 = 199;
+pub const KVM_CAP_SREGS2: u32 = 200;
+pub const KVM_CAP_EXIT_HYPERCALL: u32 = 201;
+pub const KVM_CAP_PPC_RPT_INVALIDATE: u32 = 202;
+pub const KVM_CAP_BINARY_STATS_FD: u32 = 203;
+pub const KVM_CAP_EXIT_ON_EMULATION_FAILURE: u32 = 204;
+pub const KVM_CAP_ARM_MTE: u32 = 205;
+pub const KVM_CAP_VM_MOVE_ENC_CONTEXT_FROM: u32 = 206;
+pub const KVM_CAP_VM_GPA_BITS: u32 = 207;
+pub const KVM_CAP_XSAVE2: u32 = 208;
+pub const KVM_CAP_SYS_ATTRIBUTES: u32 = 209;
+pub const KVM_CAP_PPC_AIL_MODE_3: u32 = 210;
+pub const KVM_CAP_S390_MEM_OP_EXTENSION: u32 = 211;
+pub const KVM_CAP_PMU_CAPABILITY: u32 = 212;
+pub const KVM_CAP_DISABLE_QUIRKS2: u32 = 213;
+pub const KVM_CAP_VM_TSC_CONTROL: u32 = 214;
+pub const KVM_CAP_SYSTEM_EVENT_DATA: u32 = 215;
+pub const KVM_CAP_ARM_SYSTEM_SUSPEND: u32 = 216;
+pub const KVM_CAP_S390_PROTECTED_DUMP: u32 = 217;
+pub const KVM_CAP_X86_TRIPLE_FAULT_EVENT: u32 = 218;
+pub const KVM_CAP_X86_NOTIFY_VMEXIT: u32 = 219;
+pub const KVM_CAP_VM_DISABLE_NX_HUGE_PAGES: u32 = 220;
+pub const KVM_CAP_S390_ZPCI_OP: u32 = 221;
+pub const KVM_CAP_S390_CPU_TOPOLOGY: u32 = 222;
 pub const KVM_IRQ_ROUTING_IRQCHIP: u32 = 1;
 pub const KVM_IRQ_ROUTING_MSI: u32 = 2;
 pub const KVM_IRQ_ROUTING_S390_ADAPTER: u32 = 3;
 pub const KVM_IRQ_ROUTING_HV_SINT: u32 = 4;
+pub const KVM_IRQ_ROUTING_XEN_EVTCHN: u32 = 5;
 pub const KVM_IRQFD_FLAG_DEASSIGN: u32 = 1;
 pub const KVM_IRQFD_FLAG_RESAMPLE: u32 = 2;
 pub const KVM_CLOCK_TSC_STABLE: u32 = 2;
+pub const KVM_CLOCK_REALTIME: u32 = 4;
+pub const KVM_CLOCK_HOST_TSC: u32 = 8;
 pub const KVM_MMU_FSL_BOOKE_NOHV: u32 = 0;
 pub const KVM_MMU_FSL_BOOKE_HV: u32 = 1;
 pub const KVM_REG_ARCH_MASK: i64 = -72057594037927936;
@@ -700,15 +765,23 @@ pub const KVM_DEV_VFIO_GROUP_DEL: u32 = 2;
 pub const KVM_DEV_VFIO_GROUP_SET_SPAPR_TCE: u32 = 3;
 pub const KVM_S390_STORE_STATUS_NOADDR: i32 = -1;
 pub const KVM_S390_STORE_STATUS_PREFIXED: i32 = -2;
+pub const KVM_XEN_EVTCHN_DEASSIGN: u32 = 1;
+pub const KVM_XEN_EVTCHN_UPDATE: u32 = 2;
+pub const KVM_XEN_EVTCHN_RESET: u32 = 4;
 pub const KVM_XEN_ATTR_TYPE_LONG_MODE: u32 = 0;
 pub const KVM_XEN_ATTR_TYPE_SHARED_INFO: u32 = 1;
 pub const KVM_XEN_ATTR_TYPE_UPCALL_VECTOR: u32 = 2;
+pub const KVM_XEN_ATTR_TYPE_EVTCHN: u32 = 3;
+pub const KVM_XEN_ATTR_TYPE_XEN_VERSION: u32 = 4;
 pub const KVM_XEN_VCPU_ATTR_TYPE_VCPU_INFO: u32 = 0;
 pub const KVM_XEN_VCPU_ATTR_TYPE_VCPU_TIME_INFO: u32 = 1;
 pub const KVM_XEN_VCPU_ATTR_TYPE_RUNSTATE_ADDR: u32 = 2;
 pub const KVM_XEN_VCPU_ATTR_TYPE_RUNSTATE_CURRENT: u32 = 3;
 pub const KVM_XEN_VCPU_ATTR_TYPE_RUNSTATE_DATA: u32 = 4;
 pub const KVM_XEN_VCPU_ATTR_TYPE_RUNSTATE_ADJUST: u32 = 5;
+pub const KVM_XEN_VCPU_ATTR_TYPE_VCPU_ID: u32 = 6;
+pub const KVM_XEN_VCPU_ATTR_TYPE_TIMER: u32 = 7;
+pub const KVM_XEN_VCPU_ATTR_TYPE_UPCALL_VECTOR: u32 = 8;
 pub const KVM_DEV_ASSIGN_ENABLE_IOMMU: u32 = 1;
 pub const KVM_DEV_ASSIGN_PCI_2_3: u32 = 2;
 pub const KVM_DEV_ASSIGN_MASK_INTX: u32 = 4;
@@ -734,6 +807,33 @@ pub const KVM_DIRTY_LOG_PAGE_OFFSET: u32 = 0;
 pub const KVM_DIRTY_GFN_F_MASK: u32 = 3;
 pub const KVM_BUS_LOCK_DETECTION_OFF: u32 = 1;
 pub const KVM_BUS_LOCK_DETECTION_EXIT: u32 = 2;
+pub const KVM_PMU_CAP_DISABLE: u32 = 1;
+pub const KVM_STATS_TYPE_SHIFT: u32 = 0;
+pub const KVM_STATS_TYPE_MASK: u32 = 15;
+pub const KVM_STATS_TYPE_CUMULATIVE: u32 = 0;
+pub const KVM_STATS_TYPE_INSTANT: u32 = 1;
+pub const KVM_STATS_TYPE_PEAK: u32 = 2;
+pub const KVM_STATS_TYPE_LINEAR_HIST: u32 = 3;
+pub const KVM_STATS_TYPE_LOG_HIST: u32 = 4;
+pub const KVM_STATS_TYPE_MAX: u32 = 4;
+pub const KVM_STATS_UNIT_SHIFT: u32 = 4;
+pub const KVM_STATS_UNIT_MASK: u32 = 240;
+pub const KVM_STATS_UNIT_NONE: u32 = 0;
+pub const KVM_STATS_UNIT_BYTES: u32 = 16;
+pub const KVM_STATS_UNIT_SECONDS: u32 = 32;
+pub const KVM_STATS_UNIT_CYCLES: u32 = 48;
+pub const KVM_STATS_UNIT_BOOLEAN: u32 = 64;
+pub const KVM_STATS_UNIT_MAX: u32 = 64;
+pub const KVM_STATS_BASE_SHIFT: u32 = 8;
+pub const KVM_STATS_BASE_MASK: u32 = 3840;
+pub const KVM_STATS_BASE_POW10: u32 = 0;
+pub const KVM_STATS_BASE_POW2: u32 = 256;
+pub const KVM_STATS_BASE_MAX: u32 = 256;
+pub const KVM_X86_NOTIFY_VMEXIT_ENABLED: u32 = 1;
+pub const KVM_X86_NOTIFY_VMEXIT_USER: u32 = 2;
+pub const KVM_S390_ZPCIOP_REG_AEN: u32 = 0;
+pub const KVM_S390_ZPCIOP_DEREG_AEN: u32 = 1;
+pub const KVM_S390_ZPCIOP_REGAEN_HOST: u32 = 1;
 pub type __s8 = ::std::os::raw::c_schar;
 pub type __u8 = ::std::os::raw::c_uchar;
 pub type __s16 = ::std::os::raw::c_short;
@@ -1286,6 +1386,89 @@ fn bindgen_test_layout_user_pac_generic_keys() {
     );
 }
 #[repr(C)]
+#[derive(Debug, Default, Copy, Clone, PartialEq)]
+pub struct user_za_header {
+    pub size: __u32,
+    pub max_size: __u32,
+    pub vl: __u16,
+    pub max_vl: __u16,
+    pub flags: __u16,
+    pub __reserved: __u16,
+}
+#[test]
+fn bindgen_test_layout_user_za_header() {
+    assert_eq!(
+        ::std::mem::size_of::<user_za_header>(),
+        16usize,
+        concat!("Size of: ", stringify!(user_za_header))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<user_za_header>(),
+        4usize,
+        concat!("Alignment of ", stringify!(user_za_header))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<user_za_header>())).size as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(user_za_header),
+            "::",
+            stringify!(size)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<user_za_header>())).max_size as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(user_za_header),
+            "::",
+            stringify!(max_size)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<user_za_header>())).vl as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(user_za_header),
+            "::",
+            stringify!(vl)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<user_za_header>())).max_vl as *const _ as usize },
+        10usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(user_za_header),
+            "::",
+            stringify!(max_vl)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<user_za_header>())).flags as *const _ as usize },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(user_za_header),
+            "::",
+            stringify!(flags)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<user_za_header>())).__reserved as *const _ as usize },
+        14usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(user_za_header),
+            "::",
+            stringify!(__reserved)
+        )
+    );
+}
+#[repr(C)]
 #[repr(align(16))]
 #[derive(Debug, Default, Copy, Clone, PartialEq)]
 pub struct kvm_regs {
@@ -1495,6 +1678,7 @@ fn bindgen_test_layout_kvm_guest_debug_arch() {
 #[derive(Debug, Default, Copy, Clone, PartialEq)]
 pub struct kvm_debug_exit_arch {
     pub hsr: __u32,
+    pub hsr_high: __u32,
     pub far: __u64,
 }
 #[test]
@@ -1517,6 +1701,16 @@ fn bindgen_test_layout_kvm_debug_exit_arch() {
             stringify!(kvm_debug_exit_arch),
             "::",
             stringify!(hsr)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_debug_exit_arch>())).hsr_high as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_debug_exit_arch),
+            "::",
+            stringify!(hsr_high)
         )
     );
     assert_eq!(
@@ -1744,6 +1938,94 @@ fn bindgen_test_layout_kvm_vcpu_events() {
         )
     );
 }
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub struct kvm_arm_copy_mte_tags {
+    pub guest_ipa: __u64,
+    pub length: __u64,
+    pub addr: *mut ::std::os::raw::c_void,
+    pub flags: __u64,
+    pub reserved: [__u64; 2usize],
+}
+#[test]
+fn bindgen_test_layout_kvm_arm_copy_mte_tags() {
+    assert_eq!(
+        ::std::mem::size_of::<kvm_arm_copy_mte_tags>(),
+        48usize,
+        concat!("Size of: ", stringify!(kvm_arm_copy_mte_tags))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<kvm_arm_copy_mte_tags>(),
+        8usize,
+        concat!("Alignment of ", stringify!(kvm_arm_copy_mte_tags))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_arm_copy_mte_tags>())).guest_ipa as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_arm_copy_mte_tags),
+            "::",
+            stringify!(guest_ipa)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_arm_copy_mte_tags>())).length as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_arm_copy_mte_tags),
+            "::",
+            stringify!(length)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_arm_copy_mte_tags>())).addr as *const _ as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_arm_copy_mte_tags),
+            "::",
+            stringify!(addr)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_arm_copy_mte_tags>())).flags as *const _ as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_arm_copy_mte_tags),
+            "::",
+            stringify!(flags)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_arm_copy_mte_tags>())).reserved as *const _ as usize },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_arm_copy_mte_tags),
+            "::",
+            stringify!(reserved)
+        )
+    );
+}
+impl Default for kvm_arm_copy_mte_tags {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+pub const KVM_REG_ARM_STD_BIT_TRNG_V1_0: ::std::os::raw::c_uint = 0;
+pub type _bindgen_ty_1 = ::std::os::raw::c_uint;
+pub const KVM_REG_ARM_STD_HYP_BIT_PV_TIME: ::std::os::raw::c_uint = 0;
+pub type _bindgen_ty_2 = ::std::os::raw::c_uint;
+pub const KVM_REG_ARM_VENDOR_HYP_BIT_FUNC_FEAT: ::std::os::raw::c_uint = 0;
+pub const KVM_REG_ARM_VENDOR_HYP_BIT_PTP: ::std::os::raw::c_uint = 1;
+pub type _bindgen_ty_3 = ::std::os::raw::c_uint;
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, PartialEq)]
 pub struct kvm_user_trace_setup {
@@ -3090,17 +3372,21 @@ pub union kvm_run__bindgen_ty_1 {
     pub s390_ucontrol: kvm_run__bindgen_ty_1__bindgen_ty_10,
     pub dcr: kvm_run__bindgen_ty_1__bindgen_ty_11,
     pub internal: kvm_run__bindgen_ty_1__bindgen_ty_12,
-    pub osi: kvm_run__bindgen_ty_1__bindgen_ty_13,
-    pub papr_hcall: kvm_run__bindgen_ty_1__bindgen_ty_14,
-    pub s390_tsch: kvm_run__bindgen_ty_1__bindgen_ty_15,
-    pub epr: kvm_run__bindgen_ty_1__bindgen_ty_16,
-    pub system_event: kvm_run__bindgen_ty_1__bindgen_ty_17,
-    pub s390_stsi: kvm_run__bindgen_ty_1__bindgen_ty_18,
-    pub eoi: kvm_run__bindgen_ty_1__bindgen_ty_19,
+    pub emulation_failure: kvm_run__bindgen_ty_1__bindgen_ty_13,
+    pub osi: kvm_run__bindgen_ty_1__bindgen_ty_14,
+    pub papr_hcall: kvm_run__bindgen_ty_1__bindgen_ty_15,
+    pub s390_tsch: kvm_run__bindgen_ty_1__bindgen_ty_16,
+    pub epr: kvm_run__bindgen_ty_1__bindgen_ty_17,
+    pub system_event: kvm_run__bindgen_ty_1__bindgen_ty_18,
+    pub s390_stsi: kvm_run__bindgen_ty_1__bindgen_ty_19,
+    pub eoi: kvm_run__bindgen_ty_1__bindgen_ty_20,
     pub hyperv: kvm_hyperv_exit,
-    pub arm_nisv: kvm_run__bindgen_ty_1__bindgen_ty_20,
-    pub msr: kvm_run__bindgen_ty_1__bindgen_ty_21,
+    pub arm_nisv: kvm_run__bindgen_ty_1__bindgen_ty_21,
+    pub msr: kvm_run__bindgen_ty_1__bindgen_ty_22,
     pub xen: kvm_xen_exit,
+    pub riscv_sbi: kvm_run__bindgen_ty_1__bindgen_ty_23,
+    pub riscv_csr: kvm_run__bindgen_ty_1__bindgen_ty_24,
+    pub notify: kvm_run__bindgen_ty_1__bindgen_ty_25,
     pub padding: [::std::os::raw::c_char; 256usize],
 }
 #[repr(C)]
@@ -3820,15 +4106,100 @@ fn bindgen_test_layout_kvm_run__bindgen_ty_1__bindgen_ty_12() {
     );
 }
 #[repr(C)]
-#[derive(Debug, Default, Copy, Clone, PartialEq)]
+#[derive(Copy, Clone)]
 pub struct kvm_run__bindgen_ty_1__bindgen_ty_13 {
-    pub gprs: [__u64; 32usize],
+    pub suberror: __u32,
+    pub ndata: __u32,
+    pub flags: __u64,
+    pub __bindgen_anon_1: kvm_run__bindgen_ty_1__bindgen_ty_13__bindgen_ty_1,
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union kvm_run__bindgen_ty_1__bindgen_ty_13__bindgen_ty_1 {
+    pub __bindgen_anon_1: kvm_run__bindgen_ty_1__bindgen_ty_13__bindgen_ty_1__bindgen_ty_1,
+}
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, PartialEq)]
+pub struct kvm_run__bindgen_ty_1__bindgen_ty_13__bindgen_ty_1__bindgen_ty_1 {
+    pub insn_size: __u8,
+    pub insn_bytes: [__u8; 15usize],
+}
+#[test]
+fn bindgen_test_layout_kvm_run__bindgen_ty_1__bindgen_ty_13__bindgen_ty_1__bindgen_ty_1() {
+    assert_eq!(
+        ::std::mem::size_of::<kvm_run__bindgen_ty_1__bindgen_ty_13__bindgen_ty_1__bindgen_ty_1>(),
+        16usize,
+        concat!(
+            "Size of: ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_13__bindgen_ty_1__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<kvm_run__bindgen_ty_1__bindgen_ty_13__bindgen_ty_1__bindgen_ty_1>(),
+        1usize,
+        concat!(
+            "Alignment of ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_13__bindgen_ty_1__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            & (* (:: std :: ptr :: null :: < kvm_run__bindgen_ty_1__bindgen_ty_13__bindgen_ty_1__bindgen_ty_1 > ())) . insn_size as * const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_13__bindgen_ty_1__bindgen_ty_1),
+            "::",
+            stringify!(insn_size)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            & (* (:: std :: ptr :: null :: < kvm_run__bindgen_ty_1__bindgen_ty_13__bindgen_ty_1__bindgen_ty_1 > ())) . insn_bytes as * const _ as usize
+        },
+        1usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_13__bindgen_ty_1__bindgen_ty_1),
+            "::",
+            stringify!(insn_bytes)
+        )
+    );
+}
+#[test]
+fn bindgen_test_layout_kvm_run__bindgen_ty_1__bindgen_ty_13__bindgen_ty_1() {
+    assert_eq!(
+        ::std::mem::size_of::<kvm_run__bindgen_ty_1__bindgen_ty_13__bindgen_ty_1>(),
+        16usize,
+        concat!(
+            "Size of: ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_13__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<kvm_run__bindgen_ty_1__bindgen_ty_13__bindgen_ty_1>(),
+        1usize,
+        concat!(
+            "Alignment of ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_13__bindgen_ty_1)
+        )
+    );
+}
+impl Default for kvm_run__bindgen_ty_1__bindgen_ty_13__bindgen_ty_1 {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[test]
 fn bindgen_test_layout_kvm_run__bindgen_ty_1__bindgen_ty_13() {
     assert_eq!(
         ::std::mem::size_of::<kvm_run__bindgen_ty_1__bindgen_ty_13>(),
-        256usize,
+        32usize,
         concat!(
             "Size of: ",
             stringify!(kvm_run__bindgen_ty_1__bindgen_ty_13)
@@ -3844,7 +4215,7 @@ fn bindgen_test_layout_kvm_run__bindgen_ty_1__bindgen_ty_13() {
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_13>())).gprs as *const _
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_13>())).suberror as *const _
                 as usize
         },
         0usize,
@@ -3852,22 +4223,55 @@ fn bindgen_test_layout_kvm_run__bindgen_ty_1__bindgen_ty_13() {
             "Offset of field: ",
             stringify!(kvm_run__bindgen_ty_1__bindgen_ty_13),
             "::",
-            stringify!(gprs)
+            stringify!(suberror)
         )
     );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_13>())).ndata as *const _
+                as usize
+        },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_13),
+            "::",
+            stringify!(ndata)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_13>())).flags as *const _
+                as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_13),
+            "::",
+            stringify!(flags)
+        )
+    );
+}
+impl Default for kvm_run__bindgen_ty_1__bindgen_ty_13 {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, PartialEq)]
 pub struct kvm_run__bindgen_ty_1__bindgen_ty_14 {
-    pub nr: __u64,
-    pub ret: __u64,
-    pub args: [__u64; 9usize],
+    pub gprs: [__u64; 32usize],
 }
 #[test]
 fn bindgen_test_layout_kvm_run__bindgen_ty_1__bindgen_ty_14() {
     assert_eq!(
         ::std::mem::size_of::<kvm_run__bindgen_ty_1__bindgen_ty_14>(),
-        88usize,
+        256usize,
         concat!(
             "Size of: ",
             stringify!(kvm_run__bindgen_ty_1__bindgen_ty_14)
@@ -3883,38 +4287,77 @@ fn bindgen_test_layout_kvm_run__bindgen_ty_1__bindgen_ty_14() {
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_14>())).nr as *const _ as usize
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_14>())).gprs as *const _
+                as usize
         },
         0usize,
         concat!(
             "Offset of field: ",
             stringify!(kvm_run__bindgen_ty_1__bindgen_ty_14),
             "::",
+            stringify!(gprs)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, PartialEq)]
+pub struct kvm_run__bindgen_ty_1__bindgen_ty_15 {
+    pub nr: __u64,
+    pub ret: __u64,
+    pub args: [__u64; 9usize],
+}
+#[test]
+fn bindgen_test_layout_kvm_run__bindgen_ty_1__bindgen_ty_15() {
+    assert_eq!(
+        ::std::mem::size_of::<kvm_run__bindgen_ty_1__bindgen_ty_15>(),
+        88usize,
+        concat!(
+            "Size of: ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_15)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<kvm_run__bindgen_ty_1__bindgen_ty_15>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_15)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_15>())).nr as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_15),
+            "::",
             stringify!(nr)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_14>())).ret as *const _
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_15>())).ret as *const _
                 as usize
         },
         8usize,
         concat!(
             "Offset of field: ",
-            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_14),
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_15),
             "::",
             stringify!(ret)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_14>())).args as *const _
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_15>())).args as *const _
                 as usize
         },
         16usize,
         concat!(
             "Offset of field: ",
-            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_14),
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_15),
             "::",
             stringify!(args)
         )
@@ -3922,7 +4365,7 @@ fn bindgen_test_layout_kvm_run__bindgen_ty_1__bindgen_ty_14() {
 }
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, PartialEq)]
-pub struct kvm_run__bindgen_ty_1__bindgen_ty_15 {
+pub struct kvm_run__bindgen_ty_1__bindgen_ty_16 {
     pub subchannel_id: __u16,
     pub subchannel_nr: __u16,
     pub io_int_parm: __u32,
@@ -3931,112 +4374,10 @@ pub struct kvm_run__bindgen_ty_1__bindgen_ty_15 {
     pub dequeued: __u8,
 }
 #[test]
-fn bindgen_test_layout_kvm_run__bindgen_ty_1__bindgen_ty_15() {
-    assert_eq!(
-        ::std::mem::size_of::<kvm_run__bindgen_ty_1__bindgen_ty_15>(),
-        20usize,
-        concat!(
-            "Size of: ",
-            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_15)
-        )
-    );
-    assert_eq!(
-        ::std::mem::align_of::<kvm_run__bindgen_ty_1__bindgen_ty_15>(),
-        4usize,
-        concat!(
-            "Alignment of ",
-            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_15)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_15>())).subchannel_id
-                as *const _ as usize
-        },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_15),
-            "::",
-            stringify!(subchannel_id)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_15>())).subchannel_nr
-                as *const _ as usize
-        },
-        2usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_15),
-            "::",
-            stringify!(subchannel_nr)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_15>())).io_int_parm as *const _
-                as usize
-        },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_15),
-            "::",
-            stringify!(io_int_parm)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_15>())).io_int_word as *const _
-                as usize
-        },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_15),
-            "::",
-            stringify!(io_int_word)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_15>())).ipb as *const _
-                as usize
-        },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_15),
-            "::",
-            stringify!(ipb)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_15>())).dequeued as *const _
-                as usize
-        },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_15),
-            "::",
-            stringify!(dequeued)
-        )
-    );
-}
-#[repr(C)]
-#[derive(Debug, Default, Copy, Clone, PartialEq)]
-pub struct kvm_run__bindgen_ty_1__bindgen_ty_16 {
-    pub epr: __u32,
-}
-#[test]
 fn bindgen_test_layout_kvm_run__bindgen_ty_1__bindgen_ty_16() {
     assert_eq!(
         ::std::mem::size_of::<kvm_run__bindgen_ty_1__bindgen_ty_16>(),
-        4usize,
+        20usize,
         concat!(
             "Size of: ",
             stringify!(kvm_run__bindgen_ty_1__bindgen_ty_16)
@@ -4052,29 +4393,93 @@ fn bindgen_test_layout_kvm_run__bindgen_ty_1__bindgen_ty_16() {
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_16>())).epr as *const _
-                as usize
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_16>())).subchannel_id
+                as *const _ as usize
         },
         0usize,
         concat!(
             "Offset of field: ",
             stringify!(kvm_run__bindgen_ty_1__bindgen_ty_16),
             "::",
-            stringify!(epr)
+            stringify!(subchannel_id)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_16>())).subchannel_nr
+                as *const _ as usize
+        },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_16),
+            "::",
+            stringify!(subchannel_nr)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_16>())).io_int_parm as *const _
+                as usize
+        },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_16),
+            "::",
+            stringify!(io_int_parm)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_16>())).io_int_word as *const _
+                as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_16),
+            "::",
+            stringify!(io_int_word)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_16>())).ipb as *const _
+                as usize
+        },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_16),
+            "::",
+            stringify!(ipb)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_16>())).dequeued as *const _
+                as usize
+        },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_16),
+            "::",
+            stringify!(dequeued)
         )
     );
 }
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, PartialEq)]
 pub struct kvm_run__bindgen_ty_1__bindgen_ty_17 {
-    pub type_: __u32,
-    pub flags: __u64,
+    pub epr: __u32,
 }
 #[test]
 fn bindgen_test_layout_kvm_run__bindgen_ty_1__bindgen_ty_17() {
     assert_eq!(
         ::std::mem::size_of::<kvm_run__bindgen_ty_1__bindgen_ty_17>(),
-        16usize,
+        4usize,
         concat!(
             "Size of: ",
             stringify!(kvm_run__bindgen_ty_1__bindgen_ty_17)
@@ -4082,7 +4487,7 @@ fn bindgen_test_layout_kvm_run__bindgen_ty_1__bindgen_ty_17() {
     );
     assert_eq!(
         ::std::mem::align_of::<kvm_run__bindgen_ty_1__bindgen_ty_17>(),
-        8usize,
+        4usize,
         concat!(
             "Alignment of ",
             stringify!(kvm_run__bindgen_ty_1__bindgen_ty_17)
@@ -4090,7 +4495,7 @@ fn bindgen_test_layout_kvm_run__bindgen_ty_1__bindgen_ty_17() {
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_17>())).type_ as *const _
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_17>())).epr as *const _
                 as usize
         },
         0usize,
@@ -4098,38 +4503,82 @@ fn bindgen_test_layout_kvm_run__bindgen_ty_1__bindgen_ty_17() {
             "Offset of field: ",
             stringify!(kvm_run__bindgen_ty_1__bindgen_ty_17),
             "::",
-            stringify!(type_)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_17>())).flags as *const _
-                as usize
-        },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_17),
-            "::",
-            stringify!(flags)
+            stringify!(epr)
         )
     );
 }
 #[repr(C)]
-#[derive(Debug, Default, Copy, Clone, PartialEq)]
+#[derive(Copy, Clone)]
 pub struct kvm_run__bindgen_ty_1__bindgen_ty_18 {
-    pub addr: __u64,
-    pub ar: __u8,
-    pub reserved: __u8,
-    pub fc: __u8,
-    pub sel1: __u8,
-    pub sel2: __u16,
+    pub type_: __u32,
+    pub ndata: __u32,
+    pub __bindgen_anon_1: kvm_run__bindgen_ty_1__bindgen_ty_18__bindgen_ty_1,
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union kvm_run__bindgen_ty_1__bindgen_ty_18__bindgen_ty_1 {
+    pub flags: __u64,
+    pub data: [__u64; 16usize],
+}
+#[test]
+fn bindgen_test_layout_kvm_run__bindgen_ty_1__bindgen_ty_18__bindgen_ty_1() {
+    assert_eq!(
+        ::std::mem::size_of::<kvm_run__bindgen_ty_1__bindgen_ty_18__bindgen_ty_1>(),
+        128usize,
+        concat!(
+            "Size of: ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_18__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<kvm_run__bindgen_ty_1__bindgen_ty_18__bindgen_ty_1>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_18__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_18__bindgen_ty_1>())).flags
+                as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_18__bindgen_ty_1),
+            "::",
+            stringify!(flags)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_18__bindgen_ty_1>())).data
+                as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_18__bindgen_ty_1),
+            "::",
+            stringify!(data)
+        )
+    );
+}
+impl Default for kvm_run__bindgen_ty_1__bindgen_ty_18__bindgen_ty_1 {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[test]
 fn bindgen_test_layout_kvm_run__bindgen_ty_1__bindgen_ty_18() {
     assert_eq!(
         ::std::mem::size_of::<kvm_run__bindgen_ty_1__bindgen_ty_18>(),
-        16usize,
+        136usize,
         concat!(
             "Size of: ",
             stringify!(kvm_run__bindgen_ty_1__bindgen_ty_18)
@@ -4145,7 +4594,7 @@ fn bindgen_test_layout_kvm_run__bindgen_ty_1__bindgen_ty_18() {
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_18>())).addr as *const _
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_18>())).type_ as *const _
                 as usize
         },
         0usize,
@@ -4153,83 +4602,47 @@ fn bindgen_test_layout_kvm_run__bindgen_ty_1__bindgen_ty_18() {
             "Offset of field: ",
             stringify!(kvm_run__bindgen_ty_1__bindgen_ty_18),
             "::",
-            stringify!(addr)
+            stringify!(type_)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_18>())).ar as *const _ as usize
-        },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_18),
-            "::",
-            stringify!(ar)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_18>())).reserved as *const _
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_18>())).ndata as *const _
                 as usize
         },
-        9usize,
+        4usize,
         concat!(
             "Offset of field: ",
             stringify!(kvm_run__bindgen_ty_1__bindgen_ty_18),
             "::",
-            stringify!(reserved)
+            stringify!(ndata)
         )
     );
-    assert_eq!(
+}
+impl Default for kvm_run__bindgen_ty_1__bindgen_ty_18 {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
         unsafe {
-            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_18>())).fc as *const _ as usize
-        },
-        10usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_18),
-            "::",
-            stringify!(fc)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_18>())).sel1 as *const _
-                as usize
-        },
-        11usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_18),
-            "::",
-            stringify!(sel1)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_18>())).sel2 as *const _
-                as usize
-        },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_18),
-            "::",
-            stringify!(sel2)
-        )
-    );
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, PartialEq)]
 pub struct kvm_run__bindgen_ty_1__bindgen_ty_19 {
-    pub vector: __u8,
+    pub addr: __u64,
+    pub ar: __u8,
+    pub reserved: __u8,
+    pub fc: __u8,
+    pub sel1: __u8,
+    pub sel2: __u16,
 }
 #[test]
 fn bindgen_test_layout_kvm_run__bindgen_ty_1__bindgen_ty_19() {
     assert_eq!(
         ::std::mem::size_of::<kvm_run__bindgen_ty_1__bindgen_ty_19>(),
-        1usize,
+        16usize,
         concat!(
             "Size of: ",
             stringify!(kvm_run__bindgen_ty_1__bindgen_ty_19)
@@ -4237,7 +4650,7 @@ fn bindgen_test_layout_kvm_run__bindgen_ty_1__bindgen_ty_19() {
     );
     assert_eq!(
         ::std::mem::align_of::<kvm_run__bindgen_ty_1__bindgen_ty_19>(),
-        1usize,
+        8usize,
         concat!(
             "Alignment of ",
             stringify!(kvm_run__bindgen_ty_1__bindgen_ty_19)
@@ -4245,7 +4658,7 @@ fn bindgen_test_layout_kvm_run__bindgen_ty_1__bindgen_ty_19() {
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_19>())).vector as *const _
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_19>())).addr as *const _
                 as usize
         },
         0usize,
@@ -4253,21 +4666,83 @@ fn bindgen_test_layout_kvm_run__bindgen_ty_1__bindgen_ty_19() {
             "Offset of field: ",
             stringify!(kvm_run__bindgen_ty_1__bindgen_ty_19),
             "::",
-            stringify!(vector)
+            stringify!(addr)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_19>())).ar as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_19),
+            "::",
+            stringify!(ar)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_19>())).reserved as *const _
+                as usize
+        },
+        9usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_19),
+            "::",
+            stringify!(reserved)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_19>())).fc as *const _ as usize
+        },
+        10usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_19),
+            "::",
+            stringify!(fc)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_19>())).sel1 as *const _
+                as usize
+        },
+        11usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_19),
+            "::",
+            stringify!(sel1)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_19>())).sel2 as *const _
+                as usize
+        },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_19),
+            "::",
+            stringify!(sel2)
         )
     );
 }
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, PartialEq)]
 pub struct kvm_run__bindgen_ty_1__bindgen_ty_20 {
-    pub esr_iss: __u64,
-    pub fault_ipa: __u64,
+    pub vector: __u8,
 }
 #[test]
 fn bindgen_test_layout_kvm_run__bindgen_ty_1__bindgen_ty_20() {
     assert_eq!(
         ::std::mem::size_of::<kvm_run__bindgen_ty_1__bindgen_ty_20>(),
-        16usize,
+        1usize,
         concat!(
             "Size of: ",
             stringify!(kvm_run__bindgen_ty_1__bindgen_ty_20)
@@ -4275,7 +4750,7 @@ fn bindgen_test_layout_kvm_run__bindgen_ty_1__bindgen_ty_20() {
     );
     assert_eq!(
         ::std::mem::align_of::<kvm_run__bindgen_ty_1__bindgen_ty_20>(),
-        8usize,
+        1usize,
         concat!(
             "Alignment of ",
             stringify!(kvm_run__bindgen_ty_1__bindgen_ty_20)
@@ -4283,7 +4758,7 @@ fn bindgen_test_layout_kvm_run__bindgen_ty_1__bindgen_ty_20() {
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_20>())).esr_iss as *const _
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_20>())).vector as *const _
                 as usize
         },
         0usize,
@@ -4291,37 +4766,21 @@ fn bindgen_test_layout_kvm_run__bindgen_ty_1__bindgen_ty_20() {
             "Offset of field: ",
             stringify!(kvm_run__bindgen_ty_1__bindgen_ty_20),
             "::",
-            stringify!(esr_iss)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_20>())).fault_ipa as *const _
-                as usize
-        },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_20),
-            "::",
-            stringify!(fault_ipa)
+            stringify!(vector)
         )
     );
 }
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, PartialEq)]
 pub struct kvm_run__bindgen_ty_1__bindgen_ty_21 {
-    pub error: __u8,
-    pub pad: [__u8; 7usize],
-    pub reason: __u32,
-    pub index: __u32,
-    pub data: __u64,
+    pub esr_iss: __u64,
+    pub fault_ipa: __u64,
 }
 #[test]
 fn bindgen_test_layout_kvm_run__bindgen_ty_1__bindgen_ty_21() {
     assert_eq!(
         ::std::mem::size_of::<kvm_run__bindgen_ty_1__bindgen_ty_21>(),
-        24usize,
+        16usize,
         concat!(
             "Size of: ",
             stringify!(kvm_run__bindgen_ty_1__bindgen_ty_21)
@@ -4337,7 +4796,7 @@ fn bindgen_test_layout_kvm_run__bindgen_ty_1__bindgen_ty_21() {
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_21>())).error as *const _
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_21>())).esr_iss as *const _
                 as usize
         },
         0usize,
@@ -4345,25 +4804,12 @@ fn bindgen_test_layout_kvm_run__bindgen_ty_1__bindgen_ty_21() {
             "Offset of field: ",
             stringify!(kvm_run__bindgen_ty_1__bindgen_ty_21),
             "::",
-            stringify!(error)
+            stringify!(esr_iss)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_21>())).pad as *const _
-                as usize
-        },
-        1usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_21),
-            "::",
-            stringify!(pad)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_21>())).reason as *const _
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_21>())).fault_ipa as *const _
                 as usize
         },
         8usize,
@@ -4371,33 +4817,295 @@ fn bindgen_test_layout_kvm_run__bindgen_ty_1__bindgen_ty_21() {
             "Offset of field: ",
             stringify!(kvm_run__bindgen_ty_1__bindgen_ty_21),
             "::",
+            stringify!(fault_ipa)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, PartialEq)]
+pub struct kvm_run__bindgen_ty_1__bindgen_ty_22 {
+    pub error: __u8,
+    pub pad: [__u8; 7usize],
+    pub reason: __u32,
+    pub index: __u32,
+    pub data: __u64,
+}
+#[test]
+fn bindgen_test_layout_kvm_run__bindgen_ty_1__bindgen_ty_22() {
+    assert_eq!(
+        ::std::mem::size_of::<kvm_run__bindgen_ty_1__bindgen_ty_22>(),
+        24usize,
+        concat!(
+            "Size of: ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_22)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<kvm_run__bindgen_ty_1__bindgen_ty_22>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_22)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_22>())).error as *const _
+                as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_22),
+            "::",
+            stringify!(error)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_22>())).pad as *const _
+                as usize
+        },
+        1usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_22),
+            "::",
+            stringify!(pad)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_22>())).reason as *const _
+                as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_22),
+            "::",
             stringify!(reason)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_21>())).index as *const _
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_22>())).index as *const _
                 as usize
         },
         12usize,
         concat!(
             "Offset of field: ",
-            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_21),
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_22),
             "::",
             stringify!(index)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_21>())).data as *const _
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_22>())).data as *const _
                 as usize
         },
         16usize,
         concat!(
             "Offset of field: ",
-            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_21),
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_22),
             "::",
             stringify!(data)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, PartialEq)]
+pub struct kvm_run__bindgen_ty_1__bindgen_ty_23 {
+    pub extension_id: ::std::os::raw::c_ulong,
+    pub function_id: ::std::os::raw::c_ulong,
+    pub args: [::std::os::raw::c_ulong; 6usize],
+    pub ret: [::std::os::raw::c_ulong; 2usize],
+}
+#[test]
+fn bindgen_test_layout_kvm_run__bindgen_ty_1__bindgen_ty_23() {
+    assert_eq!(
+        ::std::mem::size_of::<kvm_run__bindgen_ty_1__bindgen_ty_23>(),
+        80usize,
+        concat!(
+            "Size of: ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_23)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<kvm_run__bindgen_ty_1__bindgen_ty_23>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_23)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_23>())).extension_id
+                as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_23),
+            "::",
+            stringify!(extension_id)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_23>())).function_id as *const _
+                as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_23),
+            "::",
+            stringify!(function_id)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_23>())).args as *const _
+                as usize
+        },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_23),
+            "::",
+            stringify!(args)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_23>())).ret as *const _
+                as usize
+        },
+        64usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_23),
+            "::",
+            stringify!(ret)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, PartialEq)]
+pub struct kvm_run__bindgen_ty_1__bindgen_ty_24 {
+    pub csr_num: ::std::os::raw::c_ulong,
+    pub new_value: ::std::os::raw::c_ulong,
+    pub write_mask: ::std::os::raw::c_ulong,
+    pub ret_value: ::std::os::raw::c_ulong,
+}
+#[test]
+fn bindgen_test_layout_kvm_run__bindgen_ty_1__bindgen_ty_24() {
+    assert_eq!(
+        ::std::mem::size_of::<kvm_run__bindgen_ty_1__bindgen_ty_24>(),
+        32usize,
+        concat!(
+            "Size of: ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_24)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<kvm_run__bindgen_ty_1__bindgen_ty_24>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_24)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_24>())).csr_num as *const _
+                as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_24),
+            "::",
+            stringify!(csr_num)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_24>())).new_value as *const _
+                as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_24),
+            "::",
+            stringify!(new_value)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_24>())).write_mask as *const _
+                as usize
+        },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_24),
+            "::",
+            stringify!(write_mask)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_24>())).ret_value as *const _
+                as usize
+        },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_24),
+            "::",
+            stringify!(ret_value)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, PartialEq)]
+pub struct kvm_run__bindgen_ty_1__bindgen_ty_25 {
+    pub flags: __u32,
+}
+#[test]
+fn bindgen_test_layout_kvm_run__bindgen_ty_1__bindgen_ty_25() {
+    assert_eq!(
+        ::std::mem::size_of::<kvm_run__bindgen_ty_1__bindgen_ty_25>(),
+        4usize,
+        concat!(
+            "Size of: ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_25)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<kvm_run__bindgen_ty_1__bindgen_ty_25>(),
+        4usize,
+        concat!(
+            "Alignment of ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_25)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1__bindgen_ty_25>())).flags as *const _
+                as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_run__bindgen_ty_1__bindgen_ty_25),
+            "::",
+            stringify!(flags)
         )
     );
 }
@@ -4554,6 +5262,18 @@ fn bindgen_test_layout_kvm_run__bindgen_ty_1() {
         )
     );
     assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_run__bindgen_ty_1>())).emulation_failure as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_run__bindgen_ty_1),
+            "::",
+            stringify!(emulation_failure)
+        )
+    );
+    assert_eq!(
         unsafe { &(*(::std::ptr::null::<kvm_run__bindgen_ty_1>())).osi as *const _ as usize },
         0usize,
         concat!(
@@ -4665,6 +5385,36 @@ fn bindgen_test_layout_kvm_run__bindgen_ty_1() {
             stringify!(kvm_run__bindgen_ty_1),
             "::",
             stringify!(xen)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_run__bindgen_ty_1>())).riscv_sbi as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_run__bindgen_ty_1),
+            "::",
+            stringify!(riscv_sbi)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_run__bindgen_ty_1>())).riscv_csr as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_run__bindgen_ty_1),
+            "::",
+            stringify!(riscv_csr)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_run__bindgen_ty_1>())).notify as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_run__bindgen_ty_1),
+            "::",
+            stringify!(notify)
         )
     );
     assert_eq!(
@@ -5263,9 +6013,60 @@ pub struct kvm_s390_mem_op {
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub union kvm_s390_mem_op__bindgen_ty_1 {
-    pub ar: __u8,
+    pub __bindgen_anon_1: kvm_s390_mem_op__bindgen_ty_1__bindgen_ty_1,
     pub sida_offset: __u32,
     pub reserved: [__u8; 32usize],
+}
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, PartialEq)]
+pub struct kvm_s390_mem_op__bindgen_ty_1__bindgen_ty_1 {
+    pub ar: __u8,
+    pub key: __u8,
+}
+#[test]
+fn bindgen_test_layout_kvm_s390_mem_op__bindgen_ty_1__bindgen_ty_1() {
+    assert_eq!(
+        ::std::mem::size_of::<kvm_s390_mem_op__bindgen_ty_1__bindgen_ty_1>(),
+        2usize,
+        concat!(
+            "Size of: ",
+            stringify!(kvm_s390_mem_op__bindgen_ty_1__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<kvm_s390_mem_op__bindgen_ty_1__bindgen_ty_1>(),
+        1usize,
+        concat!(
+            "Alignment of ",
+            stringify!(kvm_s390_mem_op__bindgen_ty_1__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_s390_mem_op__bindgen_ty_1__bindgen_ty_1>())).ar as *const _
+                as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_s390_mem_op__bindgen_ty_1__bindgen_ty_1),
+            "::",
+            stringify!(ar)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_s390_mem_op__bindgen_ty_1__bindgen_ty_1>())).key as *const _
+                as usize
+        },
+        1usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_s390_mem_op__bindgen_ty_1__bindgen_ty_1),
+            "::",
+            stringify!(key)
+        )
+    );
 }
 #[test]
 fn bindgen_test_layout_kvm_s390_mem_op__bindgen_ty_1() {
@@ -5278,18 +6079,6 @@ fn bindgen_test_layout_kvm_s390_mem_op__bindgen_ty_1() {
         ::std::mem::align_of::<kvm_s390_mem_op__bindgen_ty_1>(),
         4usize,
         concat!("Alignment of ", stringify!(kvm_s390_mem_op__bindgen_ty_1))
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<kvm_s390_mem_op__bindgen_ty_1>())).ar as *const _ as usize
-        },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(kvm_s390_mem_op__bindgen_ty_1),
-            "::",
-            stringify!(ar)
-        )
     );
     assert_eq!(
         unsafe {
@@ -6650,7 +7439,7 @@ pub const kvm_ioeventfd_flag_nr_deassign: ::std::os::raw::c_uint = 2;
 pub const kvm_ioeventfd_flag_nr_virtio_ccw_notify: ::std::os::raw::c_uint = 3;
 pub const kvm_ioeventfd_flag_nr_fast_mmio: ::std::os::raw::c_uint = 4;
 pub const kvm_ioeventfd_flag_nr_max: ::std::os::raw::c_uint = 5;
-pub type _bindgen_ty_1 = ::std::os::raw::c_uint;
+pub type _bindgen_ty_4 = ::std::os::raw::c_uint;
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct kvm_ioeventfd {
@@ -7367,6 +8156,58 @@ fn bindgen_test_layout_kvm_irq_routing_hv_sint() {
     );
 }
 #[repr(C)]
+#[derive(Debug, Default, Copy, Clone, PartialEq)]
+pub struct kvm_irq_routing_xen_evtchn {
+    pub port: __u32,
+    pub vcpu: __u32,
+    pub priority: __u32,
+}
+#[test]
+fn bindgen_test_layout_kvm_irq_routing_xen_evtchn() {
+    assert_eq!(
+        ::std::mem::size_of::<kvm_irq_routing_xen_evtchn>(),
+        12usize,
+        concat!("Size of: ", stringify!(kvm_irq_routing_xen_evtchn))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<kvm_irq_routing_xen_evtchn>(),
+        4usize,
+        concat!("Alignment of ", stringify!(kvm_irq_routing_xen_evtchn))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_irq_routing_xen_evtchn>())).port as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_irq_routing_xen_evtchn),
+            "::",
+            stringify!(port)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_irq_routing_xen_evtchn>())).vcpu as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_irq_routing_xen_evtchn),
+            "::",
+            stringify!(vcpu)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_irq_routing_xen_evtchn>())).priority as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_irq_routing_xen_evtchn),
+            "::",
+            stringify!(priority)
+        )
+    );
+}
+#[repr(C)]
 #[derive(Copy, Clone)]
 pub struct kvm_irq_routing_entry {
     pub gsi: __u32,
@@ -7382,6 +8223,7 @@ pub union kvm_irq_routing_entry__bindgen_ty_1 {
     pub msi: kvm_irq_routing_msi,
     pub adapter: kvm_irq_routing_s390_adapter,
     pub hv_sint: kvm_irq_routing_hv_sint,
+    pub xen_evtchn: kvm_irq_routing_xen_evtchn,
     pub pad: [__u32; 8usize],
 }
 #[test]
@@ -7448,6 +8290,19 @@ fn bindgen_test_layout_kvm_irq_routing_entry__bindgen_ty_1() {
             stringify!(kvm_irq_routing_entry__bindgen_ty_1),
             "::",
             stringify!(hv_sint)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_irq_routing_entry__bindgen_ty_1>())).xen_evtchn as *const _
+                as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_irq_routing_entry__bindgen_ty_1),
+            "::",
+            stringify!(xen_evtchn)
         )
     );
     assert_eq!(
@@ -7679,7 +8534,10 @@ fn bindgen_test_layout_kvm_irqfd() {
 pub struct kvm_clock_data {
     pub clock: __u64,
     pub flags: __u32,
-    pub pad: [__u32; 9usize],
+    pub pad0: __u32,
+    pub realtime: __u64,
+    pub host_tsc: __u64,
+    pub pad: [__u32; 4usize],
 }
 #[test]
 fn bindgen_test_layout_kvm_clock_data() {
@@ -7714,8 +8572,38 @@ fn bindgen_test_layout_kvm_clock_data() {
         )
     );
     assert_eq!(
-        unsafe { &(*(::std::ptr::null::<kvm_clock_data>())).pad as *const _ as usize },
+        unsafe { &(*(::std::ptr::null::<kvm_clock_data>())).pad0 as *const _ as usize },
         12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_clock_data),
+            "::",
+            stringify!(pad0)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_clock_data>())).realtime as *const _ as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_clock_data),
+            "::",
+            stringify!(realtime)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_clock_data>())).host_tsc as *const _ as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_clock_data),
+            "::",
+            stringify!(host_tsc)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_clock_data>())).pad as *const _ as usize },
+        32usize,
         concat!(
             "Offset of field: ",
             stringify!(kvm_clock_data),
@@ -8364,6 +9252,378 @@ fn bindgen_test_layout_kvm_s390_pv_unp() {
         )
     );
 }
+pub const pv_cmd_dmp_id_KVM_PV_DUMP_INIT: pv_cmd_dmp_id = 0;
+pub const pv_cmd_dmp_id_KVM_PV_DUMP_CONFIG_STOR_STATE: pv_cmd_dmp_id = 1;
+pub const pv_cmd_dmp_id_KVM_PV_DUMP_COMPLETE: pv_cmd_dmp_id = 2;
+pub const pv_cmd_dmp_id_KVM_PV_DUMP_CPU: pv_cmd_dmp_id = 3;
+pub type pv_cmd_dmp_id = ::std::os::raw::c_uint;
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, PartialEq)]
+pub struct kvm_s390_pv_dmp {
+    pub subcmd: __u64,
+    pub buff_addr: __u64,
+    pub buff_len: __u64,
+    pub gaddr: __u64,
+    pub reserved: [__u64; 4usize],
+}
+#[test]
+fn bindgen_test_layout_kvm_s390_pv_dmp() {
+    assert_eq!(
+        ::std::mem::size_of::<kvm_s390_pv_dmp>(),
+        64usize,
+        concat!("Size of: ", stringify!(kvm_s390_pv_dmp))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<kvm_s390_pv_dmp>(),
+        8usize,
+        concat!("Alignment of ", stringify!(kvm_s390_pv_dmp))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_s390_pv_dmp>())).subcmd as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_s390_pv_dmp),
+            "::",
+            stringify!(subcmd)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_s390_pv_dmp>())).buff_addr as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_s390_pv_dmp),
+            "::",
+            stringify!(buff_addr)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_s390_pv_dmp>())).buff_len as *const _ as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_s390_pv_dmp),
+            "::",
+            stringify!(buff_len)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_s390_pv_dmp>())).gaddr as *const _ as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_s390_pv_dmp),
+            "::",
+            stringify!(gaddr)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_s390_pv_dmp>())).reserved as *const _ as usize },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_s390_pv_dmp),
+            "::",
+            stringify!(reserved)
+        )
+    );
+}
+pub const pv_cmd_info_id_KVM_PV_INFO_VM: pv_cmd_info_id = 0;
+pub const pv_cmd_info_id_KVM_PV_INFO_DUMP: pv_cmd_info_id = 1;
+pub type pv_cmd_info_id = ::std::os::raw::c_uint;
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, PartialEq)]
+pub struct kvm_s390_pv_info_dump {
+    pub dump_cpu_buffer_len: __u64,
+    pub dump_config_mem_buffer_per_1m: __u64,
+    pub dump_config_finalize_len: __u64,
+}
+#[test]
+fn bindgen_test_layout_kvm_s390_pv_info_dump() {
+    assert_eq!(
+        ::std::mem::size_of::<kvm_s390_pv_info_dump>(),
+        24usize,
+        concat!("Size of: ", stringify!(kvm_s390_pv_info_dump))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<kvm_s390_pv_info_dump>(),
+        8usize,
+        concat!("Alignment of ", stringify!(kvm_s390_pv_info_dump))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_s390_pv_info_dump>())).dump_cpu_buffer_len as *const _
+                as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_s390_pv_info_dump),
+            "::",
+            stringify!(dump_cpu_buffer_len)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_s390_pv_info_dump>())).dump_config_mem_buffer_per_1m
+                as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_s390_pv_info_dump),
+            "::",
+            stringify!(dump_config_mem_buffer_per_1m)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_s390_pv_info_dump>())).dump_config_finalize_len as *const _
+                as usize
+        },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_s390_pv_info_dump),
+            "::",
+            stringify!(dump_config_finalize_len)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, PartialEq)]
+pub struct kvm_s390_pv_info_vm {
+    pub inst_calls_list: [__u64; 4usize],
+    pub max_cpus: __u64,
+    pub max_guests: __u64,
+    pub max_guest_addr: __u64,
+    pub feature_indication: __u64,
+}
+#[test]
+fn bindgen_test_layout_kvm_s390_pv_info_vm() {
+    assert_eq!(
+        ::std::mem::size_of::<kvm_s390_pv_info_vm>(),
+        64usize,
+        concat!("Size of: ", stringify!(kvm_s390_pv_info_vm))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<kvm_s390_pv_info_vm>(),
+        8usize,
+        concat!("Alignment of ", stringify!(kvm_s390_pv_info_vm))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_s390_pv_info_vm>())).inst_calls_list as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_s390_pv_info_vm),
+            "::",
+            stringify!(inst_calls_list)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_s390_pv_info_vm>())).max_cpus as *const _ as usize },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_s390_pv_info_vm),
+            "::",
+            stringify!(max_cpus)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_s390_pv_info_vm>())).max_guests as *const _ as usize },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_s390_pv_info_vm),
+            "::",
+            stringify!(max_guests)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_s390_pv_info_vm>())).max_guest_addr as *const _ as usize
+        },
+        48usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_s390_pv_info_vm),
+            "::",
+            stringify!(max_guest_addr)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_s390_pv_info_vm>())).feature_indication as *const _ as usize
+        },
+        56usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_s390_pv_info_vm),
+            "::",
+            stringify!(feature_indication)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, PartialEq)]
+pub struct kvm_s390_pv_info_header {
+    pub id: __u32,
+    pub len_max: __u32,
+    pub len_written: __u32,
+    pub reserved: __u32,
+}
+#[test]
+fn bindgen_test_layout_kvm_s390_pv_info_header() {
+    assert_eq!(
+        ::std::mem::size_of::<kvm_s390_pv_info_header>(),
+        16usize,
+        concat!("Size of: ", stringify!(kvm_s390_pv_info_header))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<kvm_s390_pv_info_header>(),
+        4usize,
+        concat!("Alignment of ", stringify!(kvm_s390_pv_info_header))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_s390_pv_info_header>())).id as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_s390_pv_info_header),
+            "::",
+            stringify!(id)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_s390_pv_info_header>())).len_max as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_s390_pv_info_header),
+            "::",
+            stringify!(len_max)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_s390_pv_info_header>())).len_written as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_s390_pv_info_header),
+            "::",
+            stringify!(len_written)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_s390_pv_info_header>())).reserved as *const _ as usize
+        },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_s390_pv_info_header),
+            "::",
+            stringify!(reserved)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct kvm_s390_pv_info {
+    pub header: kvm_s390_pv_info_header,
+    pub __bindgen_anon_1: kvm_s390_pv_info__bindgen_ty_1,
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union kvm_s390_pv_info__bindgen_ty_1 {
+    pub dump: kvm_s390_pv_info_dump,
+    pub vm: kvm_s390_pv_info_vm,
+}
+#[test]
+fn bindgen_test_layout_kvm_s390_pv_info__bindgen_ty_1() {
+    assert_eq!(
+        ::std::mem::size_of::<kvm_s390_pv_info__bindgen_ty_1>(),
+        64usize,
+        concat!("Size of: ", stringify!(kvm_s390_pv_info__bindgen_ty_1))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<kvm_s390_pv_info__bindgen_ty_1>(),
+        8usize,
+        concat!("Alignment of ", stringify!(kvm_s390_pv_info__bindgen_ty_1))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_s390_pv_info__bindgen_ty_1>())).dump as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_s390_pv_info__bindgen_ty_1),
+            "::",
+            stringify!(dump)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_s390_pv_info__bindgen_ty_1>())).vm as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_s390_pv_info__bindgen_ty_1),
+            "::",
+            stringify!(vm)
+        )
+    );
+}
+impl Default for kvm_s390_pv_info__bindgen_ty_1 {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[test]
+fn bindgen_test_layout_kvm_s390_pv_info() {
+    assert_eq!(
+        ::std::mem::size_of::<kvm_s390_pv_info>(),
+        80usize,
+        concat!("Size of: ", stringify!(kvm_s390_pv_info))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<kvm_s390_pv_info>(),
+        8usize,
+        concat!("Alignment of ", stringify!(kvm_s390_pv_info))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_s390_pv_info>())).header as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_s390_pv_info),
+            "::",
+            stringify!(header)
+        )
+    );
+}
+impl Default for kvm_s390_pv_info {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
 pub const pv_cmd_id_KVM_PV_ENABLE: pv_cmd_id = 0;
 pub const pv_cmd_id_KVM_PV_DISABLE: pv_cmd_id = 1;
 pub const pv_cmd_id_KVM_PV_SET_SEC_PARMS: pv_cmd_id = 2;
@@ -8371,6 +9631,8 @@ pub const pv_cmd_id_KVM_PV_UNPACK: pv_cmd_id = 3;
 pub const pv_cmd_id_KVM_PV_VERIFY: pv_cmd_id = 4;
 pub const pv_cmd_id_KVM_PV_PREP_RESET: pv_cmd_id = 5;
 pub const pv_cmd_id_KVM_PV_UNSHARE_ALL: pv_cmd_id = 6;
+pub const pv_cmd_id_KVM_PV_INFO: pv_cmd_id = 7;
+pub const pv_cmd_id_KVM_PV_DUMP: pv_cmd_id = 8;
 pub type pv_cmd_id = ::std::os::raw::c_uint;
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, PartialEq)]
@@ -8468,6 +9730,8 @@ pub union kvm_xen_hvm_attr__bindgen_ty_1 {
     pub long_mode: __u8,
     pub vector: __u8,
     pub shared_info: kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_1,
+    pub evtchn: kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2,
+    pub xen_version: __u32,
     pub pad: [__u64; 8usize],
 }
 #[repr(C)]
@@ -8506,6 +9770,302 @@ fn bindgen_test_layout_kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_1() {
             stringify!(gfn)
         )
     );
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2 {
+    pub send_port: __u32,
+    pub type_: __u32,
+    pub flags: __u32,
+    pub deliver: kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2__bindgen_ty_1,
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2__bindgen_ty_1 {
+    pub port: kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2__bindgen_ty_1__bindgen_ty_1,
+    pub eventfd: kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2__bindgen_ty_1__bindgen_ty_2,
+    pub padding: [__u32; 4usize],
+}
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, PartialEq)]
+pub struct kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2__bindgen_ty_1__bindgen_ty_1 {
+    pub port: __u32,
+    pub vcpu: __u32,
+    pub priority: __u32,
+}
+#[test]
+fn bindgen_test_layout_kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2__bindgen_ty_1__bindgen_ty_1() {
+    assert_eq!(
+        ::std::mem::size_of::<
+            kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2__bindgen_ty_1__bindgen_ty_1,
+        >(),
+        12usize,
+        concat!(
+            "Size of: ",
+            stringify!(kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2__bindgen_ty_1__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<
+            kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2__bindgen_ty_1__bindgen_ty_1,
+        >(),
+        4usize,
+        concat!(
+            "Alignment of ",
+            stringify!(kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2__bindgen_ty_1__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<
+                kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2__bindgen_ty_1__bindgen_ty_1,
+            >()))
+            .port as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2__bindgen_ty_1__bindgen_ty_1),
+            "::",
+            stringify!(port)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<
+                kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2__bindgen_ty_1__bindgen_ty_1,
+            >()))
+            .vcpu as *const _ as usize
+        },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2__bindgen_ty_1__bindgen_ty_1),
+            "::",
+            stringify!(vcpu)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<
+                kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2__bindgen_ty_1__bindgen_ty_1,
+            >()))
+            .priority as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2__bindgen_ty_1__bindgen_ty_1),
+            "::",
+            stringify!(priority)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, PartialEq)]
+pub struct kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2__bindgen_ty_1__bindgen_ty_2 {
+    pub port: __u32,
+    pub fd: __s32,
+}
+#[test]
+fn bindgen_test_layout_kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2__bindgen_ty_1__bindgen_ty_2() {
+    assert_eq!(
+        ::std::mem::size_of::<
+            kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2__bindgen_ty_1__bindgen_ty_2,
+        >(),
+        8usize,
+        concat!(
+            "Size of: ",
+            stringify!(kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2__bindgen_ty_1__bindgen_ty_2)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<
+            kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2__bindgen_ty_1__bindgen_ty_2,
+        >(),
+        4usize,
+        concat!(
+            "Alignment of ",
+            stringify!(kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2__bindgen_ty_1__bindgen_ty_2)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<
+                kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2__bindgen_ty_1__bindgen_ty_2,
+            >()))
+            .port as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2__bindgen_ty_1__bindgen_ty_2),
+            "::",
+            stringify!(port)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<
+                kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2__bindgen_ty_1__bindgen_ty_2,
+            >()))
+            .fd as *const _ as usize
+        },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2__bindgen_ty_1__bindgen_ty_2),
+            "::",
+            stringify!(fd)
+        )
+    );
+}
+#[test]
+fn bindgen_test_layout_kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2__bindgen_ty_1() {
+    assert_eq!(
+        ::std::mem::size_of::<kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2__bindgen_ty_1>(),
+        16usize,
+        concat!(
+            "Size of: ",
+            stringify!(kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2__bindgen_ty_1>(),
+        4usize,
+        concat!(
+            "Alignment of ",
+            stringify!(kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2__bindgen_ty_1>()))
+                .port as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2__bindgen_ty_1),
+            "::",
+            stringify!(port)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2__bindgen_ty_1>()))
+                .eventfd as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2__bindgen_ty_1),
+            "::",
+            stringify!(eventfd)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2__bindgen_ty_1>()))
+                .padding as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2__bindgen_ty_1),
+            "::",
+            stringify!(padding)
+        )
+    );
+}
+impl Default for kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2__bindgen_ty_1 {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[test]
+fn bindgen_test_layout_kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2() {
+    assert_eq!(
+        ::std::mem::size_of::<kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2>(),
+        28usize,
+        concat!(
+            "Size of: ",
+            stringify!(kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2>(),
+        4usize,
+        concat!(
+            "Alignment of ",
+            stringify!(kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2>())).send_port
+                as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2),
+            "::",
+            stringify!(send_port)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2>())).type_
+                as *const _ as usize
+        },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2),
+            "::",
+            stringify!(type_)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2>())).flags
+                as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2),
+            "::",
+            stringify!(flags)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2>())).deliver
+                as *const _ as usize
+        },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2),
+            "::",
+            stringify!(deliver)
+        )
+    );
+}
+impl Default for kvm_xen_hvm_attr__bindgen_ty_1__bindgen_ty_2 {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[test]
 fn bindgen_test_layout_kvm_xen_hvm_attr__bindgen_ty_1() {
@@ -8555,6 +10115,31 @@ fn bindgen_test_layout_kvm_xen_hvm_attr__bindgen_ty_1() {
             stringify!(kvm_xen_hvm_attr__bindgen_ty_1),
             "::",
             stringify!(shared_info)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_xen_hvm_attr__bindgen_ty_1>())).evtchn as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_xen_hvm_attr__bindgen_ty_1),
+            "::",
+            stringify!(evtchn)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_xen_hvm_attr__bindgen_ty_1>())).xen_version as *const _
+                as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_xen_hvm_attr__bindgen_ty_1),
+            "::",
+            stringify!(xen_version)
         )
     );
     assert_eq!(
@@ -8644,6 +10229,9 @@ pub union kvm_xen_vcpu_attr__bindgen_ty_1 {
     pub gpa: __u64,
     pub pad: [__u64; 8usize],
     pub runstate: kvm_xen_vcpu_attr__bindgen_ty_1__bindgen_ty_1,
+    pub vcpu_id: __u32,
+    pub timer: kvm_xen_vcpu_attr__bindgen_ty_1__bindgen_ty_2,
+    pub vector: __u8,
 }
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, PartialEq)]
@@ -8752,6 +10340,71 @@ fn bindgen_test_layout_kvm_xen_vcpu_attr__bindgen_ty_1__bindgen_ty_1() {
         )
     );
 }
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, PartialEq)]
+pub struct kvm_xen_vcpu_attr__bindgen_ty_1__bindgen_ty_2 {
+    pub port: __u32,
+    pub priority: __u32,
+    pub expires_ns: __u64,
+}
+#[test]
+fn bindgen_test_layout_kvm_xen_vcpu_attr__bindgen_ty_1__bindgen_ty_2() {
+    assert_eq!(
+        ::std::mem::size_of::<kvm_xen_vcpu_attr__bindgen_ty_1__bindgen_ty_2>(),
+        16usize,
+        concat!(
+            "Size of: ",
+            stringify!(kvm_xen_vcpu_attr__bindgen_ty_1__bindgen_ty_2)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<kvm_xen_vcpu_attr__bindgen_ty_1__bindgen_ty_2>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(kvm_xen_vcpu_attr__bindgen_ty_1__bindgen_ty_2)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_xen_vcpu_attr__bindgen_ty_1__bindgen_ty_2>())).port
+                as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_xen_vcpu_attr__bindgen_ty_1__bindgen_ty_2),
+            "::",
+            stringify!(port)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_xen_vcpu_attr__bindgen_ty_1__bindgen_ty_2>())).priority
+                as *const _ as usize
+        },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_xen_vcpu_attr__bindgen_ty_1__bindgen_ty_2),
+            "::",
+            stringify!(priority)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_xen_vcpu_attr__bindgen_ty_1__bindgen_ty_2>())).expires_ns
+                as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_xen_vcpu_attr__bindgen_ty_1__bindgen_ty_2),
+            "::",
+            stringify!(expires_ns)
+        )
+    );
+}
 #[test]
 fn bindgen_test_layout_kvm_xen_vcpu_attr__bindgen_ty_1() {
     assert_eq!(
@@ -8799,6 +10452,42 @@ fn bindgen_test_layout_kvm_xen_vcpu_attr__bindgen_ty_1() {
             stringify!(kvm_xen_vcpu_attr__bindgen_ty_1),
             "::",
             stringify!(runstate)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_xen_vcpu_attr__bindgen_ty_1>())).vcpu_id as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_xen_vcpu_attr__bindgen_ty_1),
+            "::",
+            stringify!(vcpu_id)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_xen_vcpu_attr__bindgen_ty_1>())).timer as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_xen_vcpu_attr__bindgen_ty_1),
+            "::",
+            stringify!(timer)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_xen_vcpu_attr__bindgen_ty_1>())).vector as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_xen_vcpu_attr__bindgen_ty_1),
+            "::",
+            stringify!(vector)
         )
     );
 }
@@ -10225,5 +11914,442 @@ fn bindgen_test_layout_kvm_dirty_gfn() {
             stringify!(offset)
         )
     );
+}
+#[doc = " struct kvm_stats_header - Header of per vm/vcpu binary statistics data."]
+#[doc = " @flags: Some extra information for header, always 0 for now."]
+#[doc = " @name_size: The size in bytes of the memory which contains statistics"]
+#[doc = "             name string including trailing '\\0'. The memory is allocated"]
+#[doc = "             at the send of statistics descriptor."]
+#[doc = " @num_desc: The number of statistics the vm or vcpu has."]
+#[doc = " @id_offset: The offset of the vm/vcpu stats' id string in the file pointed"]
+#[doc = "             by vm/vcpu stats fd."]
+#[doc = " @desc_offset: The offset of the vm/vcpu stats' descriptor block in the file"]
+#[doc = "               pointd by vm/vcpu stats fd."]
+#[doc = " @data_offset: The offset of the vm/vcpu stats' data block in the file"]
+#[doc = "               pointed by vm/vcpu stats fd."]
+#[doc = ""]
+#[doc = " This is the header userspace needs to read from stats fd before any other"]
+#[doc = " readings. It is used by userspace to discover all the information about the"]
+#[doc = " vm/vcpu's binary statistics."]
+#[doc = " Userspace reads this header from the start of the vm/vcpu's stats fd."]
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, PartialEq)]
+pub struct kvm_stats_header {
+    pub flags: __u32,
+    pub name_size: __u32,
+    pub num_desc: __u32,
+    pub id_offset: __u32,
+    pub desc_offset: __u32,
+    pub data_offset: __u32,
+}
+#[test]
+fn bindgen_test_layout_kvm_stats_header() {
+    assert_eq!(
+        ::std::mem::size_of::<kvm_stats_header>(),
+        24usize,
+        concat!("Size of: ", stringify!(kvm_stats_header))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<kvm_stats_header>(),
+        4usize,
+        concat!("Alignment of ", stringify!(kvm_stats_header))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_stats_header>())).flags as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_stats_header),
+            "::",
+            stringify!(flags)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_stats_header>())).name_size as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_stats_header),
+            "::",
+            stringify!(name_size)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_stats_header>())).num_desc as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_stats_header),
+            "::",
+            stringify!(num_desc)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_stats_header>())).id_offset as *const _ as usize },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_stats_header),
+            "::",
+            stringify!(id_offset)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_stats_header>())).desc_offset as *const _ as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_stats_header),
+            "::",
+            stringify!(desc_offset)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_stats_header>())).data_offset as *const _ as usize },
+        20usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_stats_header),
+            "::",
+            stringify!(data_offset)
+        )
+    );
+}
+#[doc = " struct kvm_stats_desc - Descriptor of a KVM statistics."]
+#[doc = " @flags: Annotations of the stats, like type, unit, etc."]
+#[doc = " @exponent: Used together with @flags to determine the unit."]
+#[doc = " @size: The number of data items for this stats."]
+#[doc = "        Every data item is of type __u64."]
+#[doc = " @offset: The offset of the stats to the start of stat structure in"]
+#[doc = "          structure kvm or kvm_vcpu."]
+#[doc = " @bucket_size: A parameter value used for histogram stats. It is only used"]
+#[doc = "\t\tfor linear histogram stats, specifying the size of the bucket;"]
+#[doc = " @name: The name string for the stats. Its size is indicated by the"]
+#[doc = "        &kvm_stats_header->name_size."]
+#[repr(C)]
+#[derive(Debug, Default)]
+pub struct kvm_stats_desc {
+    pub flags: __u32,
+    pub exponent: __s16,
+    pub size: __u16,
+    pub offset: __u32,
+    pub bucket_size: __u32,
+    pub name: __IncompleteArrayField<::std::os::raw::c_char>,
+}
+#[test]
+fn bindgen_test_layout_kvm_stats_desc() {
+    assert_eq!(
+        ::std::mem::size_of::<kvm_stats_desc>(),
+        16usize,
+        concat!("Size of: ", stringify!(kvm_stats_desc))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<kvm_stats_desc>(),
+        4usize,
+        concat!("Alignment of ", stringify!(kvm_stats_desc))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_stats_desc>())).flags as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_stats_desc),
+            "::",
+            stringify!(flags)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_stats_desc>())).exponent as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_stats_desc),
+            "::",
+            stringify!(exponent)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_stats_desc>())).size as *const _ as usize },
+        6usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_stats_desc),
+            "::",
+            stringify!(size)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_stats_desc>())).offset as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_stats_desc),
+            "::",
+            stringify!(offset)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_stats_desc>())).bucket_size as *const _ as usize },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_stats_desc),
+            "::",
+            stringify!(bucket_size)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_stats_desc>())).name as *const _ as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_stats_desc),
+            "::",
+            stringify!(name)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct kvm_s390_zpci_op {
+    pub fh: __u32,
+    pub op: __u8,
+    pub pad: [__u8; 3usize],
+    pub u: kvm_s390_zpci_op__bindgen_ty_1,
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union kvm_s390_zpci_op__bindgen_ty_1 {
+    pub reg_aen: kvm_s390_zpci_op__bindgen_ty_1__bindgen_ty_1,
+    pub reserved: [__u64; 8usize],
+}
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, PartialEq)]
+pub struct kvm_s390_zpci_op__bindgen_ty_1__bindgen_ty_1 {
+    pub ibv: __u64,
+    pub sb: __u64,
+    pub flags: __u32,
+    pub noi: __u32,
+    pub isc: __u8,
+    pub sbo: __u8,
+    pub pad: __u16,
+}
+#[test]
+fn bindgen_test_layout_kvm_s390_zpci_op__bindgen_ty_1__bindgen_ty_1() {
+    assert_eq!(
+        ::std::mem::size_of::<kvm_s390_zpci_op__bindgen_ty_1__bindgen_ty_1>(),
+        32usize,
+        concat!(
+            "Size of: ",
+            stringify!(kvm_s390_zpci_op__bindgen_ty_1__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<kvm_s390_zpci_op__bindgen_ty_1__bindgen_ty_1>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(kvm_s390_zpci_op__bindgen_ty_1__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_s390_zpci_op__bindgen_ty_1__bindgen_ty_1>())).ibv as *const _
+                as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_s390_zpci_op__bindgen_ty_1__bindgen_ty_1),
+            "::",
+            stringify!(ibv)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_s390_zpci_op__bindgen_ty_1__bindgen_ty_1>())).sb as *const _
+                as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_s390_zpci_op__bindgen_ty_1__bindgen_ty_1),
+            "::",
+            stringify!(sb)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_s390_zpci_op__bindgen_ty_1__bindgen_ty_1>())).flags
+                as *const _ as usize
+        },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_s390_zpci_op__bindgen_ty_1__bindgen_ty_1),
+            "::",
+            stringify!(flags)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_s390_zpci_op__bindgen_ty_1__bindgen_ty_1>())).noi as *const _
+                as usize
+        },
+        20usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_s390_zpci_op__bindgen_ty_1__bindgen_ty_1),
+            "::",
+            stringify!(noi)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_s390_zpci_op__bindgen_ty_1__bindgen_ty_1>())).isc as *const _
+                as usize
+        },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_s390_zpci_op__bindgen_ty_1__bindgen_ty_1),
+            "::",
+            stringify!(isc)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_s390_zpci_op__bindgen_ty_1__bindgen_ty_1>())).sbo as *const _
+                as usize
+        },
+        25usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_s390_zpci_op__bindgen_ty_1__bindgen_ty_1),
+            "::",
+            stringify!(sbo)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_s390_zpci_op__bindgen_ty_1__bindgen_ty_1>())).pad as *const _
+                as usize
+        },
+        26usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_s390_zpci_op__bindgen_ty_1__bindgen_ty_1),
+            "::",
+            stringify!(pad)
+        )
+    );
+}
+#[test]
+fn bindgen_test_layout_kvm_s390_zpci_op__bindgen_ty_1() {
+    assert_eq!(
+        ::std::mem::size_of::<kvm_s390_zpci_op__bindgen_ty_1>(),
+        64usize,
+        concat!("Size of: ", stringify!(kvm_s390_zpci_op__bindgen_ty_1))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<kvm_s390_zpci_op__bindgen_ty_1>(),
+        8usize,
+        concat!("Alignment of ", stringify!(kvm_s390_zpci_op__bindgen_ty_1))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_s390_zpci_op__bindgen_ty_1>())).reg_aen as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_s390_zpci_op__bindgen_ty_1),
+            "::",
+            stringify!(reg_aen)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<kvm_s390_zpci_op__bindgen_ty_1>())).reserved as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_s390_zpci_op__bindgen_ty_1),
+            "::",
+            stringify!(reserved)
+        )
+    );
+}
+impl Default for kvm_s390_zpci_op__bindgen_ty_1 {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[test]
+fn bindgen_test_layout_kvm_s390_zpci_op() {
+    assert_eq!(
+        ::std::mem::size_of::<kvm_s390_zpci_op>(),
+        72usize,
+        concat!("Size of: ", stringify!(kvm_s390_zpci_op))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<kvm_s390_zpci_op>(),
+        8usize,
+        concat!("Alignment of ", stringify!(kvm_s390_zpci_op))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_s390_zpci_op>())).fh as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_s390_zpci_op),
+            "::",
+            stringify!(fh)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_s390_zpci_op>())).op as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_s390_zpci_op),
+            "::",
+            stringify!(op)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_s390_zpci_op>())).pad as *const _ as usize },
+        5usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_s390_zpci_op),
+            "::",
+            stringify!(pad)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<kvm_s390_zpci_op>())).u as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(kvm_s390_zpci_op),
+            "::",
+            stringify!(u)
+        )
+    );
+}
+impl Default for kvm_s390_zpci_op {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 pub type __uint128_t = u128;
