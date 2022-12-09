@@ -5,9 +5,7 @@
 Rust FFI bindings to KVM, generated using
 [bindgen](https://crates.io/crates/bindgen). It currently has support for the
 following target architectures:
-- x86
 - x86_64
-- arm
 - arm64
 
 The bindings exported by this crate are statically generated using header files
