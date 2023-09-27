@@ -20,3 +20,8 @@ pub use self::x86_64::*;
 mod arm64;
 #[cfg(any(target_arch = "aarch", target_arch = "aarch64"))]
 pub use self::arm64::*;
+
+#[cfg(any(target_arch = "riscv32", target_arch = "riscv64"))]
+mod riscv;
+#[cfg(any(target_arch = "riscv32", target_arch = "riscv64"))]
+pub use self::riscv::*;

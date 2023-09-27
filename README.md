@@ -7,6 +7,7 @@ following target architectures:
 - x86_64
 - arm
 - arm64
+- riscv
 
 The bindings exported by this crate are statically generated using header files
 associated with a specific kernel version, and are not automatically synced with
