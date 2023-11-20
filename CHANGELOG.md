@@ -1,6 +1,7 @@
 # Changelog
 ## [Unreleased]
 
+- arm64: add KVM_REG_ARM64_SVE_VLS const
 - API change in the bindings from upstream kernel changes:
 * system_event has been made into a new union
 - The x86 module has been renamed to x86_64 for consistency (matches the kernel
