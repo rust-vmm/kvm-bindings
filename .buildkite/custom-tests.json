@@ -1,24 +1,24 @@
 {
     "tests": [
         {
-            "test_name": "build-fam-gnu",
-            "command": "cargo build --release --features=fam-wrappers",
+            "test_name": "build-all-features-gnu",
+            "command": "cargo build --release --all-features --tests",
             "platform": [
                 "x86_64",
                 "aarch64"
             ]
         },
         {
-            "test_name": "build-fam-musl",
-            "command": "cargo build --release --features=fam-wrappers --target {target_platform}-unknown-linux-musl",
+            "test_name": "build-all-features-musl",
+            "command": "cargo build --release --all-features --target {target_platform}-unknown-linux-musl --tests",
             "platform": [
                 "x86_64",
                 "aarch64"
             ]
         },
         {
-            "test_name": "check-warnings-fam",
-            "command": "RUSTFLAGS=\"-D warnings\" cargo check --features=fam-wrappers",
+            "test_name": "check-warnings-all-features",
+            "command": "RUSTFLAGS=\"-D warnings\" cargo check --all-features",
             "platform": [
                 "x86_64",
                 "aarch64"
