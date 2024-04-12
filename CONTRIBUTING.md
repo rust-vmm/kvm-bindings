@@ -28,9 +28,12 @@ For this example we assume that you have both linux and kvm-bindings
 repositories in your root.
 
 ```bash
+# Example for arm64
+export ARCH=arm64
+
 # Step 1 (if adding a new architecture): Create a new module using the name of the architecture in src/
 pushd kvm-bindings
-mkdir src/arm64
+mkdir src/"$ARCH"
 popd
 
 # linux is the repository that you cloned at the previous step.
@@ -42,7 +45,6 @@ git checkout v6.2
 # This will generate the headers for the targeted architecture and place them
 # in the user specified directory
 
-export ARCH=arm64
 make headers_install ARCH=$ARCH INSTALL_HDR_PATH="$ARCH"_headers
 pushd "$ARCH"_headers
 bindgen include/linux/kvm.h -o bindings.rs  \
@@ -53,7 +55,7 @@ popd
 
 # Step 4: Copy the generated file to the arm64 module.
 popd
-cp linux/"$ARCH"_headers/bindings.rs kvm-bindings/src/arm64
+cp linux/"$ARCH"_headers/bindings.rs kvm-bindings/src/"$ARCH"
 
 ```
 
