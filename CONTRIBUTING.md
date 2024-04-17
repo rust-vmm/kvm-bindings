@@ -29,7 +29,7 @@ repositories in your root.
 
 ```bash
 # Example for arm64
-export ARCH=arm64
+if [ "$(uname -m)" = "aarch64" ]; then export ARCH=arm64; else export ARCH=$(uname -m); fi
 
 # Step 1 (if adding a new architecture): Create a new module using the name of the architecture in src/
 pushd kvm-bindings
