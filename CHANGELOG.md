@@ -3,6 +3,9 @@
 
 ### Added
 
+- arm64 KVM_ARM_VCPU_HAS_EL2 feature bit for checking nested virtualization
+  capability.
+
 ### Changed
 
 ### Removed

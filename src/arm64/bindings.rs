@@ -244,6 +244,7 @@ pub const KVM_ARM_VCPU_PMU_V3: u32 = 3;
 pub const KVM_ARM_VCPU_SVE: u32 = 4;
 pub const KVM_ARM_VCPU_PTRAUTH_ADDRESS: u32 = 5;
 pub const KVM_ARM_VCPU_PTRAUTH_GENERIC: u32 = 6;
+pub const KVM_ARM_VCPU_HAS_EL2: u32 = 7;
 pub const KVM_ARM_MAX_DBG_REGS: u32 = 16;
 pub const KVM_DEBUG_ARCH_HSR_HIGH_VALID: u32 = 1;
 pub const KVM_GUESTDBG_USE_SW_BP: u32 = 65536;
