@@ -3,6 +3,9 @@
 
 ### Added
 
+- KVM bindings for Linux kernel version 6.9 with support for 
+  riscv32, riscv64.
+
 ### Changed
 
 ### Removed
